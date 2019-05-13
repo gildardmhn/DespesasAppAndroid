@@ -2,6 +2,8 @@ package com.codinginflow.despesas.Activity;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
+
 import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
@@ -14,6 +16,8 @@ import com.codinginflow.despesas.Model.Usuario;
 import com.codinginflow.despesas.R;
 import com.codinginflow.despesas.ViewModel.UsuarioViewModel;
 import com.google.android.material.textfield.TextInputEditText;
+
+import static android.app.Activity.RESULT_OK;
 
 public class LoginActivity extends AppCompatActivity {
 
