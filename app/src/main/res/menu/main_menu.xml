@@ -10,6 +10,9 @@
         android:id="@+id/estabelecimento_menu"
         android:title="Estabelecimentos"/>
     <item
+        android:id="@+id/usuario_menu"
+        android:title="Usuarios"/>
+    <item
         android:id="@+id/sair_menu"
         android:title="Sair"/>
 </menu>

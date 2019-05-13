@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="8dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="8dp">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_view_usu_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:text="ID: 1"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_view_usu_nome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:text="Nome"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:maxLines="1"
+            android:layout_alignParentStart="true"
+            android:ellipsize="end"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_view_usu_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:text="Email"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:maxLines="1"
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/text_view_usu_nome"
+            android:ellipsize="end"/>
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_view_usu_telefone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:text="Telefone"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:maxLines="1"
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/text_view_usu_email"
+            android:ellipsize="end"/>
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_view_usu_senha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:text="Senha"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:maxLines="1"
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/text_view_usu_telefone"
+            android:ellipsize="end"/>
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

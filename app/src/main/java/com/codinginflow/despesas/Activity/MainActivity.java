@@ -142,8 +142,13 @@ public class MainActivity extends AppCompatActivity {
                 return true;*/
             case R.id.estabelecimento_menu:
                 startActivity(new Intent(getApplicationContext(), EstabelecimentoActivity.class));
+                return true;
             case R.id.sair_menu:
                 startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                return true;
+            case R.id.usuario_menu:
+                startActivity(new Intent(getApplicationContext(), UsuarioActivity.class));
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

@@ -16,7 +16,8 @@
         android:focusable="true"
         android:focusableInTouchMode="true">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <EditText
+            android:id="@+id/edit_text_usu_nome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -31,7 +32,8 @@
         android:focusable="true"
         android:focusableInTouchMode="true">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <EditText
+            android:id="@+id/edit_text_usu_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -46,7 +48,8 @@
         android:focusable="true"
         android:focusableInTouchMode="true">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <EditText
+            android:id="@+id/edit_text_usu_telefone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -61,7 +64,8 @@
         android:focusable="true"
         android:focusableInTouchMode="true">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <EditText
+            android:id="@+id/edit_text_usu_senha"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -69,14 +73,15 @@
             android:textSize="20sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <!--
     <Button
+        android:id="@+id/save_usuario"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginTop="40dp"
         android:background="@drawable/button_rounded"
-        android:onClick="btnLogin"
         android:text="Realizar Cadastro"
         android:textColor="#FFF"
         android:textSize="22sp" />
-
+    -->
 </LinearLayout>
