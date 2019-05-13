@@ -6,16 +6,27 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.google.android.material.textfield.TextInputEditText;
+
 public class LoginActivity extends AppCompatActivity {
+
+    private TextInputEditText email;
+    private TextInputEditText input_text;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        getSupportActionBar().setTitle("Entrar");
+        setTitle("Entrar");
+    }
+
+    public void btnMain(View view) {
+        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        finish();
     }
 
     public void btnCadastro(View view) {
         startActivity(new Intent(getApplicationContext(), CadastroActivity.class));
+        finish();
     }
 }

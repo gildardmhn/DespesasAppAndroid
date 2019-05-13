@@ -31,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+
         FloatingActionButton buttonAddDespesa = findViewById(R.id.button_add_despesa);
         buttonAddDespesa.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
         } else if (requestCode == EDIT_DESPESA_REQUEST && resultCode == RESULT_OK) {
 
             int id = data.getIntExtra(AddEditDespesaActivity.EXTRA_ID, -1);
-            if(id == - 1){
+            if (id == -1) {
                 Toast.makeText(this, "Despesa não pode ser atualizada", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -136,6 +138,8 @@ public class MainActivity extends AppCompatActivity {
                 return true;*/
             case R.id.estabelecimento_menu:
                 startActivity(new Intent(getApplicationContext(), EstabelecimentoActivity.class));
+            case R.id.sair_menu:
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
             default:
                 return super.onOptionsItemSelected(item);
         }

@@ -86,7 +86,7 @@ public class EstabelecimentoActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == ADD_ESTABELECIMENTO_REQUEST && resultCode == RESULT_OK){
+        if (requestCode == ADD_ESTABELECIMENTO_REQUEST && resultCode == RESULT_OK) {
             String nome = data.getStringExtra(AddEditEstabelecimentoActivity.EXTRA_NOME);
             String endereco = data.getStringExtra(AddEditEstabelecimentoActivity.EXTRA_ENDERECO);
             String telefone = data.getStringExtra(AddEditEstabelecimentoActivity.EXTRA_TELEFONE);
@@ -95,9 +95,9 @@ public class EstabelecimentoActivity extends AppCompatActivity {
             estabelecimentoViewModel.insert(estabelecimento);
             Toast.makeText(this, "Estabelecimento salva com sucesso", Toast.LENGTH_SHORT).show();
 
-        }else if(requestCode == EDIT_ESTABELECIMENTO_REQUEST && resultCode == RESULT_OK){
+        } else if (requestCode == EDIT_ESTABELECIMENTO_REQUEST && resultCode == RESULT_OK) {
             int id = data.getIntExtra(AddEditEstabelecimentoActivity.EXTRA_ID, -1);
-            if(id == - 1){
+            if (id == -1) {
                 Toast.makeText(this, "Estabelecimento não pode ser atualizado", Toast.LENGTH_SHORT).show();
                 return;
             }

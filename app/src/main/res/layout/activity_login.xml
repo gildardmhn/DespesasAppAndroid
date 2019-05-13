@@ -10,8 +10,8 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:padding="5dp"
+        android:layout_height="200dp"
+        android:padding="30dp"
         android:src="@drawable/money"/>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -21,6 +21,7 @@
         android:focusableInTouchMode="true"
         android:layout_marginTop="5dp">
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/input_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Email"
@@ -36,6 +37,7 @@
         app:passwordToggleEnabled="true"
         android:layout_marginTop="5dp">
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/input_senha"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Senha"
@@ -44,21 +46,22 @@
             android:textSize="20sp"/>
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.button.MaterialButton
+    <Button
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="40dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
         android:text="Entrar"
-        android:textSize="22sp"
+        android:textSize="18sp"
         android:textColor="#FFF"
-        android:background="@drawable/button_rounded"/>
+        android:background="@drawable/button_rounded"
+        android:onClick="btnMain"/>
 
-    <com.google.android.material.button.MaterialButton
+    <Button
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="40dp"
+        android:layout_height="50dp"
         android:text="Realizar Cadastro"
-        android:textSize="22sp"
+        android:textSize="18sp"
+        android:layout_marginTop="5dp"
         android:textColor="#FFF"
         android:background="@drawable/button_rounded"
         android:onClick="btnCadastro"/>
