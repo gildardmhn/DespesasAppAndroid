@@ -1,9 +1,13 @@
-package com.codinginflow.despesas;
+package com.codinginflow.despesas.Repository;
 
 import android.app.Application;
 import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
+
+import com.codinginflow.despesas.Dao.EstabelecimentoDao;
+import com.codinginflow.despesas.Database.DespesaDatabase;
+import com.codinginflow.despesas.Model.Estabelecimento;
 
 import java.util.List;
 

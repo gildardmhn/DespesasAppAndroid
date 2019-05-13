@@ -1,4 +1,4 @@
-package com.codinginflow.despesas;
+package com.codinginflow.despesas.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +16,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.codinginflow.despesas.Adapter.DespesaAdapter;
+import com.codinginflow.despesas.ViewModel.DespesaViewModel;
+import com.codinginflow.despesas.Model.Despesa;
+import com.codinginflow.despesas.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;

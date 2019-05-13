@@ -1,4 +1,4 @@
-package com.codinginflow.despesas;
+package com.codinginflow.despesas.Dao;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -6,6 +6,8 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
+
+import com.codinginflow.despesas.Model.Despesa;
 
 import java.util.List;
 

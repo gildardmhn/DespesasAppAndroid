@@ -7,7 +7,7 @@
     android:background="@color/background"
     android:orientation="vertical"
     android:padding="30dp"
-    tools:context=".CadastroActivity">
+    tools:context=".Activity.CadastroActivity">
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"

@@ -1,4 +1,4 @@
-package com.codinginflow.despesas;
+package com.codinginflow.despesas.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.codinginflow.despesas.R;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class LoginActivity extends AppCompatActivity {

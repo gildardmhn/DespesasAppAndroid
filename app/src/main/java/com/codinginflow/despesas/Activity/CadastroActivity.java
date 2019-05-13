@@ -1,10 +1,12 @@
-package com.codinginflow.despesas;
+package com.codinginflow.despesas.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
+import com.codinginflow.despesas.R;
 
 public class CadastroActivity extends AppCompatActivity {
 

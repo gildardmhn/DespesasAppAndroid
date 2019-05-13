@@ -1,4 +1,4 @@
-package com.codinginflow.despesas;
+package com.codinginflow.despesas.Model;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;

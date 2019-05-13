@@ -1,4 +1,4 @@
-package com.codinginflow.despesas;
+package com.codinginflow.despesas.Database;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -8,6 +8,13 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
+
+import com.codinginflow.despesas.Dao.DespesaDao;
+import com.codinginflow.despesas.Dao.EstabelecimentoDao;
+import com.codinginflow.despesas.Dao.UsuarioDao;
+import com.codinginflow.despesas.Model.Despesa;
+import com.codinginflow.despesas.Model.Estabelecimento;
+import com.codinginflow.despesas.Model.Usuario;
 
 @Database(entities = {Despesa.class, Estabelecimento.class, Usuario.class}, version = 1, exportSchema = false)
 public abstract class DespesaDatabase extends RoomDatabase {

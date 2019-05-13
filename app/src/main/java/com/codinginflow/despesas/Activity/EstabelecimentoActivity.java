@@ -1,4 +1,4 @@
-package com.codinginflow.despesas;
+package com.codinginflow.despesas.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,6 +14,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.codinginflow.despesas.Model.Estabelecimento;
+import com.codinginflow.despesas.Adapter.EstabelecimentoAdapter;
+import com.codinginflow.despesas.ViewModel.EstabelecimentoViewModel;
+import com.codinginflow.despesas.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;

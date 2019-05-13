@@ -10,20 +10,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".Activity.MainActivity"
             android:launchMode="singleTop">
         </activity>
         <activity
-            android:name=".AddEditEstabelecimentoActivity"
-            android:parentActivityName=".EstabelecimentoActivity" />
+            android:name=".Activity.AddEditEstabelecimentoActivity"
+            android:parentActivityName=".Activity.EstabelecimentoActivity" />
         <activity
-            android:name=".EstabelecimentoActivity"
+            android:name=".Activity.EstabelecimentoActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name=".AddEditDespesaActivity"
-            android:parentActivityName=".MainActivity" />
-        <activity android:name=".CadastroActivity" />
-        <activity android:name=".LoginActivity">
+            android:name=".Activity.AddEditDespesaActivity"
+            android:parentActivityName=".Activity.MainActivity" />
+        <activity android:name=".Activity.CadastroActivity" />
+        <activity android:name=".Activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
