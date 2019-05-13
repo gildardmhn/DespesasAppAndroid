@@ -21,8 +21,8 @@ public interface UsuarioDao {
     void delete(Usuario usuario);
 
     @Query("Delete From usuario_table")
-    void deleteAllDespesas();
+    void deleteAllUsuario();
 
     @Query("Select * From usuario_table Order By nome Asc")
-    LiveData<List<Despesa>> getAllUsuarios();
+    LiveData<List<Usuario>> getAllUsuarios();
 }

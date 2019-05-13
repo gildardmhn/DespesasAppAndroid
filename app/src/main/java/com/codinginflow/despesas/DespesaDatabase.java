@@ -9,13 +9,14 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(entities = {Despesa.class, Estabelecimento.class}, version = 1, exportSchema = false)
+@Database(entities = {Despesa.class, Estabelecimento.class, Usuario.class}, version = 1, exportSchema = false)
 public abstract class DespesaDatabase extends RoomDatabase {
 
     private static DespesaDatabase instanceDatabase;
 
     public abstract DespesaDao despesaDao();
     public abstract EstabelecimentoDao estabelecimentoDao();
+    public abstract UsuarioDao usuarioDao();
 
     public static synchronized DespesaDatabase getInstance(Context context){
         if (instanceDatabase == null){
