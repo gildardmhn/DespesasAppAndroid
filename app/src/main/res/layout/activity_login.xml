@@ -57,13 +57,13 @@
         android:onClick="btnMain"/>
 
     <Button
+        android:id="@+id/cadastrarUsuario"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="Realizar Cadastro"
-        android:textSize="18sp"
         android:layout_marginTop="5dp"
-        android:textColor="#FFF"
         android:background="@drawable/button_rounded"
-        android:onClick="btnCadastro"/>
+        android:text="Realizar Cadastro"
+        android:textColor="#FFF"
+        android:textSize="18sp" />
 
 </LinearLayout>

@@ -29,11 +29,12 @@ public class UsuarioAdapter extends RecyclerView.Adapter<UsuarioAdapter.UsuarioH
     @Override
     public void onBindViewHolder(@NonNull UsuarioHolder holder, int position) {
         Usuario currentUsuario = usuarios.get(position);
-        holder.textViewId.setText(currentUsuario.getId());
+
+//        holder.textViewId.setText(currentUsuario.getId());
         holder.textViewNome.setText(currentUsuario.getNome());
         holder.textViewEmail.setText(currentUsuario.getEmail());
         holder.textViewTelefone.setText(currentUsuario.getTelefone());
-        holder.textViewSenha.setText(currentUsuario.getSenha());
+//        holder.textViewSenha.setText(currentUsuario.getSenha());
     }
 
     @Override
@@ -47,20 +48,20 @@ public class UsuarioAdapter extends RecyclerView.Adapter<UsuarioAdapter.UsuarioH
     }
 
     class UsuarioHolder extends RecyclerView.ViewHolder{
-        private TextView textViewId;
+//        private TextView textViewId;
         private TextView textViewNome;
         private TextView textViewEmail;
         private TextView textViewTelefone;
-        private TextView textViewSenha;
+//        private TextView textViewSenha;
 
 
         public UsuarioHolder(@NonNull View itemView) {
             super(itemView);
-            textViewId = itemView.findViewById(R.id.text_view_usu_id);
+//            textViewId = itemView.findViewById(R.id.text_view_usu_id);
             textViewNome = itemView.findViewById(R.id.text_view_usu_nome);
             textViewEmail = itemView.findViewById(R.id.text_view_usu_email);
             textViewTelefone = itemView.findViewById(R.id.text_view_usu_telefone);
-            textViewSenha = itemView.findViewById(R.id.text_view_usu_senha);
+//            textViewSenha = itemView.findViewById(R.id.text_view_usu_senha);
         }
     }
 }

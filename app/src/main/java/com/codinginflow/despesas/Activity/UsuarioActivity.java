@@ -31,14 +31,16 @@ public class UsuarioActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_usuario);
 
-        FloatingActionButton buttonAddDespesa = findViewById(R.id.button_add_usuario);
-        buttonAddDespesa.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(UsuarioActivity.this, CadastroActivity.class);
-                startActivityForResult(intent, ADD_USUARIO_REQUEST);
-            }
-        });
+        setTitle("Lista de Usuários");
+
+//        FloatingActionButton buttonAddDespesa = findViewById(R.id.button_add_usuario);
+//        buttonAddDespesa.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(UsuarioActivity.this, CadastroActivity.class);
+//                startActivityForResult(intent, ADD_USUARIO_REQUEST);
+//            }
+//        });
 
         RecyclerView recyclerView = findViewById(R.id.usuario_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -56,22 +58,22 @@ public class UsuarioActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == ADD_USUARIO_REQUEST && resultCode == RESULT_OK){
-            String nome = data.getStringExtra(CadastroActivity.EXTRA_NOME);
-            String email = data.getStringExtra(CadastroActivity.EXTRA_EMAIL);
-            String telefone = data.getStringExtra(CadastroActivity.EXTRA_TELEFONE);
-            String senha = data.getStringExtra(CadastroActivity.EXTRA_SENHA);
-
-            Usuario usuario = new Usuario(nome, email, telefone, senha);
-            usuarioViewModel.insert(usuario);
-
-            Toast.makeText(this, "Usuario salvo", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "Usuario não salvo", Toast.LENGTH_SHORT).show();
-        }
-    }
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//
+//        if (requestCode == ADD_USUARIO_REQUEST && resultCode == RESULT_OK){
+//            String nome = data.getStringExtra(CadastroActivity.EXTRA_USU_NOME);
+//            String email = data.getStringExtra(CadastroActivity.EXTRA_EMAIL);
+//            String telefone = data.getStringExtra(CadastroActivity.EXTRA_USU_TELEFONE);
+//            String senha = data.getStringExtra(CadastroActivity.EXTRA_SENHA);
+//
+//            Usuario usuario = new Usuario(nome, email, telefone, senha);
+//            usuarioViewModel.insert(usuario);
+//
+//            Toast.makeText(this, "Usuario salvo", Toast.LENGTH_SHORT).show();
+//        } else {
+//            Toast.makeText(this, "Usuario não salvo", Toast.LENGTH_SHORT).show();
+//        }
+//    }
 }

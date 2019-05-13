@@ -24,7 +24,7 @@
             android:name=".Activity.AddEditDespesaActivity"
             android:parentActivityName=".Activity.MainActivity" />
         <activity android:name=".Activity.CadastroActivity"
-            android:parentActivityName=".Activity.UsuarioActivity"/>
+            android:parentActivityName=".Activity.LoginActivity"/>
         <activity android:name=".Activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

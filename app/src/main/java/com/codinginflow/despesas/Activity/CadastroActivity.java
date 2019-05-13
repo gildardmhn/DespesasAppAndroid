@@ -14,9 +14,9 @@ import com.codinginflow.despesas.R;
 
 public class CadastroActivity extends AppCompatActivity {
     public static final String EXTRA_ID = "com.codinginflow.despesas.EXTRA_ID";
-    public static final String EXTRA_NOME = "com.codinginflow.despesas.EXTRA_NOME";
+    public static final String EXTRA_USU_NOME = "com.codinginflow.despesas.EXTRA_USU_NOME";
     public static final String EXTRA_EMAIL = "com.codinginflow.despesas.EXTRA_EMAIL";
-    public static final String EXTRA_TELEFONE= "com.codinginflow.despesas.EXTRA_TELEFONE";
+    public static final String EXTRA_USU_TELEFONE= "com.codinginflow.despesas.EXTRA_USU_TELEFONE";
     public static final String EXTRA_SENHA = "com.codinginflow.despesas.EXTRA_SENHA";
 
     private EditText editTextNome;
@@ -40,7 +40,7 @@ public class CadastroActivity extends AppCompatActivity {
 
     }
 
-    private void addUsuario() {
+    private void saveUsuario() {
         String nome = editTextNome.getText().toString();
         String email = editTextEmail.getText().toString();
         String telefone = editTextTelefone.getText().toString();
@@ -52,13 +52,13 @@ public class CadastroActivity extends AppCompatActivity {
         }
 
         Intent data = new Intent();
-        data.putExtra(EXTRA_NOME, nome);
+        data.putExtra(EXTRA_USU_NOME, nome);
         data.putExtra(EXTRA_EMAIL, email);
-        data.putExtra(EXTRA_TELEFONE, telefone);
+        data.putExtra(EXTRA_USU_TELEFONE, telefone);
         data.putExtra(EXTRA_SENHA, senha);
 
         setResult(RESULT_OK, data);
-        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+//        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
         finish();
     }
 
@@ -74,7 +74,7 @@ public class CadastroActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.save_usuario:
-                addUsuario();
+                saveUsuario();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

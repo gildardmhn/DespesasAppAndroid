@@ -11,16 +11,16 @@
         android:layout_height="wrap_content"
         android:padding="10dp">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/text_view_usu_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:text="ID: 1"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+        <!--<TextView-->
+            <!--android:id="@+id/text_view_usu_id"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentEnd="true"-->
+            <!--android:text="ID: 1"-->
+            <!--android:textAppearance="@style/TextAppearance.AppCompat.Large"/>-->
 
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/text_view_usu_nome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
             android:layout_alignParentStart="true"
             android:ellipsize="end"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/text_view_usu_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -44,7 +44,7 @@
             android:ellipsize="end"/>
 
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/text_view_usu_telefone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -57,17 +57,17 @@
             android:ellipsize="end"/>
 
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/text_view_usu_senha"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:text="Senha"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:maxLines="1"
-            android:layout_alignParentStart="true"
-            android:layout_below="@id/text_view_usu_telefone"
-            android:ellipsize="end"/>
+        <!--<TextView-->
+            <!--android:id="@+id/text_view_usu_senha"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentEnd="true"-->
+            <!--android:text="Senha"-->
+            <!--android:textAppearance="@style/TextAppearance.AppCompat.Large"-->
+            <!--android:maxLines="1"-->
+            <!--android:layout_alignParentStart="true"-->
+            <!--android:layout_below="@id/text_view_usu_telefone"-->
+            <!--android:ellipsize="end"/>-->
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>
