@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".AddEditDespesaActivity">
+
+    <EditText
+        android:id="@+id/edit_text_titulo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Título"
+        android:inputType="text"/>
+
+    <EditText
+        android:id="@+id/edit_text_descricao"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Descrição"
+        android:inputType="textMultiLine"/>
+
+    <EditText
+        android:id="@+id/edit_text_tipo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Tipo"
+        android:inputType="text"/>
+
+    <EditText
+        android:id="@+id/edit_text_preco"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Preço ex: 85.4"
+        android:inputType="text"/>
+
+</LinearLayout>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="8dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="8dp">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_view_preco"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:text="85.5 R$"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_view_titulo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:text="Titulo"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:maxLines="1"
+            android:layout_toStartOf="@+id/text_view_preco"
+            android:layout_alignParentStart="true"
+            android:ellipsize="end"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_view_descricao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_view_titulo"
+            android:text="Descrição"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_view_tipo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_view_descricao"
+            android:text="Tipo"/>
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
