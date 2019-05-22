@@ -73,15 +73,23 @@
             android:textSize="20sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!--
     <Button
-        android:id="@+id/save_usuario"
+        android:id="@+id/cadastrarUsuario"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="40dp"
-        android:background="@drawable/button_rounded"
+        android:layout_height="50dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/button_success"
         android:text="Realizar Cadastro"
         android:textColor="#FFF"
-        android:textSize="22sp" />
-    -->
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/loginUsuarioBtn"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/button_rounded"
+        android:text="Já tem uma conta? Login"
+        android:textColor="#FFF"
+        android:textSize="18sp" />
 </LinearLayout>

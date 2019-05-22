@@ -50,11 +50,16 @@ public class LoginActivity extends AppCompatActivity {
         finish();
     }
 
+    public void btnCadastro(View view) {
+        startActivity(new Intent(getApplicationContext(), CadastroActivity.class));
+        finish();
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == ADD_USUARIO_LOGIN_REQUEST && resultCode == RESULT_OK){
+        if (requestCode == ADD_USUARIO_LOGIN_REQUEST && resultCode == RESULT_OK) {
             String nome = data.getStringExtra(CadastroActivity.EXTRA_USU_NOME);
             String email = data.getStringExtra(CadastroActivity.EXTRA_EMAIL);
             String telefone = data.getStringExtra(CadastroActivity.EXTRA_USU_TELEFONE);

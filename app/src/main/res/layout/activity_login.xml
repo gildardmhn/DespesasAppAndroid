@@ -64,6 +64,7 @@
         android:background="@drawable/button_rounded"
         android:text="Realizar Cadastro"
         android:textColor="#FFF"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:onClick="btnCadastro"/>
 
 </LinearLayout>

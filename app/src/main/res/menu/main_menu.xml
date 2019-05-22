@@ -8,11 +8,14 @@
         app:showAsAction="never"/> -->
     <item
         android:id="@+id/estabelecimento_menu"
-        android:title="Estabelecimentos"/>
+        android:icon="@drawable/ic_map_with_placeholder"
+        android:title="Estabelecimentos" />
     <item
         android:id="@+id/usuario_menu"
-        android:title="Usuarios"/>
+        android:icon="@drawable/ic_user_male_black_shape"
+        android:title="Usuários" />
     <item
         android:id="@+id/sair_menu"
-        android:title="Sair"/>
+        android:icon="@drawable/ic_logout"
+        android:title="Sair" />
 </menu>
