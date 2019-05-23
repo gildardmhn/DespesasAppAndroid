@@ -1,5 +1,6 @@
 package com.codinginflow.despesas.Activity;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -21,6 +22,10 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
+        // Desativar ActionBar
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
+
         tv = (TextView) findViewById(R.id.splash_texto);
         iv = (ImageView) findViewById(R.id.splash_logo);
         Animation mAnimation = AnimationUtils.loadAnimation(this, R.anim.transicao);
@@ -28,7 +33,7 @@ public class SplashActivity extends AppCompatActivity {
         iv.startAnimation(mAnimation);
 
         // ou MainActivity.class
-        final Intent i = new Intent(this, SplashActivity.class);
+        final Intent i = new Intent(this, LoginActivity.class);
 
         Thread timer = new Thread() {
             public void run() {
