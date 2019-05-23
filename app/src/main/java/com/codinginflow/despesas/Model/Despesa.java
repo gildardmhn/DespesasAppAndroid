@@ -13,6 +13,15 @@ public class Despesa {
     private String descricao;
     private String tipo;
     private Double preco;
+    private String hash;
+
+    public String getHash() {
+        return hash;
+    }
+
+    public void setHash(String hash) {
+        this.hash = hash;
+    }
 
     public Despesa(String titulo, String descricao, String tipo, Double preco) {
         this.titulo = titulo;
