@@ -14,24 +14,42 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.codinginflow.despesas.Adapter.DespesaAdapter;
+import com.codinginflow.despesas.Model.Despesa;
 import com.codinginflow.despesas.Model.Estabelecimento;
 import com.codinginflow.despesas.Adapter.EstabelecimentoAdapter;
-import com.codinginflow.despesas.ViewModel.EstabelecimentoViewModel;
+//import com.codinginflow.despesas.ViewModel.EstabelecimentoViewModel;
 import com.codinginflow.despesas.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class EstabelecimentoActivity extends AppCompatActivity {
     public static final int ADD_ESTABELECIMENTO_REQUEST = 1;
     public static final int EDIT_ESTABELECIMENTO_REQUEST = 2;
 
-    private EstabelecimentoViewModel estabelecimentoViewModel;
+//    private EstabelecimentoViewModel estabelecimentoViewModel;
+
+    FirebaseDatabase firebaseDatabase;
+    DatabaseReference databaseReference;
+    private List<Estabelecimento> estabelecimentoList = new ArrayList<Estabelecimento>();
+    private EstabelecimentoAdapter estabelecimentoAdapter = new EstabelecimentoAdapter();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_estabelecimento);
+
+        inicializarFirebase();
+        eventoDatabase();
 
         setTitle("Estabelecimentos");
 
@@ -44,46 +62,63 @@ public class EstabelecimentoActivity extends AppCompatActivity {
             }
         });
 
-        RecyclerView recyclerView = findViewById(R.id.estabelecimento_recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setHasFixedSize(true);
 
-        final EstabelecimentoAdapter estabelecimentoAdapter = new EstabelecimentoAdapter();
-        recyclerView.setAdapter(estabelecimentoAdapter);
-
-        estabelecimentoViewModel = ViewModelProviders.of(this).get(EstabelecimentoViewModel.class);
-        estabelecimentoViewModel.getAllEstabelecimentos().observe(this, new Observer<List<Estabelecimento>>() {
-            @Override
-            public void onChanged(List<Estabelecimento> estabelecimentos) {
-                estabelecimentoAdapter.submitList(estabelecimentos);
-            }
-        });
-
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-            @Override
-            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-                return false;
-            }
-
-            @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                estabelecimentoViewModel.delete(estabelecimentoAdapter.getEstabelecimentoAt(viewHolder.getAdapterPosition()));
-                Toast.makeText(EstabelecimentoActivity.this, "Estabelecimento removido", Toast.LENGTH_SHORT).show();
-            }
-        }).attachToRecyclerView(recyclerView);
+//        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+//            @Override
+//            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+//                return false;
+//            }
+//
+//            @Override
+//            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+////                estabelecimentoViewModel.delete(estabelecimentoAdapter.getEstabelecimentoAt(viewHolder.getAdapterPosition()));
+//                Toast.makeText(EstabelecimentoActivity.this, "Estabelecimento removido", Toast.LENGTH_SHORT).show();
+//            }
+//        }).attachToRecyclerView(recyclerView);
 
         estabelecimentoAdapter.setOnItemClickListener(new EstabelecimentoAdapter.onItemClickListener() {
             @Override
             public void onItemClick(Estabelecimento estabelecimento) {
                 Intent intent = new Intent(EstabelecimentoActivity.this, AddEditEstabelecimentoActivity.class);
 
-                intent.putExtra(AddEditEstabelecimentoActivity.EXTRA_ID, estabelecimento.getId());
+                intent.putExtra(AddEditEstabelecimentoActivity.EXTRA_HASH_EST, estabelecimento.getHash());
                 intent.putExtra(AddEditEstabelecimentoActivity.EXTRA_NOME, estabelecimento.getNome());
                 intent.putExtra(AddEditEstabelecimentoActivity.EXTRA_ENDERECO, estabelecimento.getEndereco());
                 intent.putExtra(AddEditEstabelecimentoActivity.EXTRA_TELEFONE, estabelecimento.getTelefone());
                 startActivityForResult(intent, EDIT_ESTABELECIMENTO_REQUEST);
             }
         });
+    }
+
+    private void eventoDatabase() {
+        databaseReference.child("Estabelecimento").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                estabelecimentoList.clear();
+                for(DataSnapshot objSnapshot : dataSnapshot.getChildren()){
+                    Estabelecimento estabelecimento = objSnapshot.getValue(Estabelecimento.class);
+                    estabelecimentoList.add(estabelecimento);
+                }
+
+                RecyclerView recyclerView = findViewById(R.id.estabelecimento_recycler_view);
+                recyclerView.setLayoutManager(new LinearLayoutManager(EstabelecimentoActivity.this));
+                recyclerView.setHasFixedSize(true);
+
+                estabelecimentoAdapter.submitList(estabelecimentoList);
+                recyclerView.setAdapter(estabelecimentoAdapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void inicializarFirebase() {
+        FirebaseApp.initializeApp(EstabelecimentoActivity.this);
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference();
     }
 
     @Override
@@ -95,13 +130,15 @@ public class EstabelecimentoActivity extends AppCompatActivity {
             String endereco = data.getStringExtra(AddEditEstabelecimentoActivity.EXTRA_ENDERECO);
             String telefone = data.getStringExtra(AddEditEstabelecimentoActivity.EXTRA_TELEFONE);
 
+            String hash = UUID.randomUUID().toString();
             Estabelecimento estabelecimento = new Estabelecimento(nome, endereco, telefone);
-            estabelecimentoViewModel.insert(estabelecimento);
-            Toast.makeText(this, "Estabelecimento salva com sucesso", Toast.LENGTH_SHORT).show();
+            estabelecimento.setHash(hash);
+            databaseReference.child("Estabelecimento").child(estabelecimento.getHash()).setValue(estabelecimento);
+            Toast.makeText(this, "Estabelecimento salvo com sucesso", Toast.LENGTH_SHORT).show();
 
         } else if (requestCode == EDIT_ESTABELECIMENTO_REQUEST && resultCode == RESULT_OK) {
-            int id = data.getIntExtra(AddEditEstabelecimentoActivity.EXTRA_ID, -1);
-            if (id == -1) {
+            String hash = data.getStringExtra(AddEditEstabelecimentoActivity.EXTRA_HASH_EST);
+            if (hash == null) {
                 Toast.makeText(this, "Estabelecimento não pode ser atualizado", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -111,8 +148,8 @@ public class EstabelecimentoActivity extends AppCompatActivity {
             String telefone = data.getStringExtra(AddEditEstabelecimentoActivity.EXTRA_TELEFONE);
 
             Estabelecimento estabelecimento = new Estabelecimento(nome, endereco, telefone);
-            estabelecimento.setId(id);
-            estabelecimentoViewModel.update(estabelecimento);
+            estabelecimento.setHash(hash);
+            databaseReference.child("Estabelecimento").child(estabelecimento.getHash()).setValue(estabelecimento);
 
             Toast.makeText(this, "Estabelecimento atualizado", Toast.LENGTH_SHORT).show();
         } else {

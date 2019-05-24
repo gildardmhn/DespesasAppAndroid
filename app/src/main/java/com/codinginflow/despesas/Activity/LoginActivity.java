@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import com.codinginflow.despesas.Model.Usuario;
 import com.codinginflow.despesas.R;
-import com.codinginflow.despesas.ViewModel.UsuarioViewModel;
+//import com.codinginflow.despesas.ViewModel.UsuarioViewModel;
 import com.google.android.material.textfield.TextInputEditText;
 
 import static android.app.Activity.RESULT_OK;
@@ -22,7 +22,7 @@ import static android.app.Activity.RESULT_OK;
 public class LoginActivity extends AppCompatActivity {
 
     public static final int ADD_USUARIO_LOGIN_REQUEST = 1;
-    private UsuarioViewModel usuarioViewModel;
+//    private UsuarioViewModel usuarioViewModel;
 
     private TextInputEditText email;
     private TextInputEditText input_text;
@@ -42,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        usuarioViewModel = ViewModelProviders.of(this).get(UsuarioViewModel.class);
+//        usuarioViewModel = ViewModelProviders.of(this).get(UsuarioViewModel.class);
     }
 
     public void btnMain(View view) {
@@ -66,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
             String senha = data.getStringExtra(CadastroActivity.EXTRA_SENHA);
 
             Usuario usuario = new Usuario(nome, email, telefone, senha);
-            usuarioViewModel.insert(usuario);
+//            usuarioViewModel.insert(usuario);
 
             Toast.makeText(this, "Usuario salvo", Toast.LENGTH_SHORT).show();
         } else {

@@ -1,14 +1,8 @@
 package com.codinginflow.despesas.Model;
 
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
-
-@Entity(tableName = "estabelecimento_table")
 public class Estabelecimento {
 
-    @PrimaryKey(autoGenerate = true)
-    private int id;
-
+    private String hash;
     private String nome;
     private String endereco;
     private String telefone;
@@ -19,12 +13,15 @@ public class Estabelecimento {
         this.telefone = telefone;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public Estabelecimento() {
     }
 
-    public int getId() {
-        return id;
+    public String getHash() {
+        return hash;
+    }
+
+    public void setHash(String hash) {
+        this.hash = hash;
     }
 
     public String getNome() {

@@ -16,7 +16,7 @@ import android.widget.Toast;
 import com.codinginflow.despesas.Adapter.UsuarioAdapter;
 import com.codinginflow.despesas.Model.Usuario;
 import com.codinginflow.despesas.R;
-import com.codinginflow.despesas.ViewModel.UsuarioViewModel;
+//import com.codinginflow.despesas.ViewModel.UsuarioViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
@@ -24,7 +24,7 @@ import java.util.List;
 public class UsuarioActivity extends AppCompatActivity {
 
     public static final int ADD_USUARIO_REQUEST = 1;
-    private UsuarioViewModel usuarioViewModel;
+//    private UsuarioViewModel usuarioViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,13 +49,13 @@ public class UsuarioActivity extends AppCompatActivity {
         final UsuarioAdapter usuarioAdapter = new UsuarioAdapter();
         recyclerView.setAdapter(usuarioAdapter);
 
-        usuarioViewModel = ViewModelProviders.of(this).get(UsuarioViewModel.class);
-        usuarioViewModel.getAllUsuarios().observe(this, new Observer<List<Usuario>>() {
-            @Override
-            public void onChanged(List<Usuario> usuarios) {
-                usuarioAdapter.setUsuarios(usuarios);
-            }
-        });
+//        usuarioViewModel = ViewModelProviders.of(this).get(UsuarioViewModel.class);
+//        usuarioViewModel.getAllUsuarios().observe(this, new Observer<List<Usuario>>() {
+//            @Override
+//            public void onChanged(List<Usuario> usuarios) {
+//                usuarioAdapter.setUsuarios(usuarios);
+//            }
+//        });
     }
 
 //    @Override
