@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 import com.codinginflow.despesas.Model.Estabelecimento;
 import com.codinginflow.despesas.Adapter.EstabelecimentoAdapter;
-import com.codinginflow.despesas.ViewModel.EstabelecimentoViewModel;
+//import com.codinginflow.despesas.ViewModel.EstabelecimentoViewModel;
 import com.codinginflow.despesas.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -26,7 +26,7 @@ public class EstabelecimentoActivity extends AppCompatActivity {
     public static final int ADD_ESTABELECIMENTO_REQUEST = 1;
     public static final int EDIT_ESTABELECIMENTO_REQUEST = 2;
 
-    private EstabelecimentoViewModel estabelecimentoViewModel;
+//    private EstabelecimentoViewModel estabelecimentoViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,13 +51,13 @@ public class EstabelecimentoActivity extends AppCompatActivity {
         final EstabelecimentoAdapter estabelecimentoAdapter = new EstabelecimentoAdapter();
         recyclerView.setAdapter(estabelecimentoAdapter);
 
-        estabelecimentoViewModel = ViewModelProviders.of(this).get(EstabelecimentoViewModel.class);
-        estabelecimentoViewModel.getAllEstabelecimentos().observe(this, new Observer<List<Estabelecimento>>() {
-            @Override
-            public void onChanged(List<Estabelecimento> estabelecimentos) {
-                estabelecimentoAdapter.submitList(estabelecimentos);
-            }
-        });
+//        estabelecimentoViewModel = ViewModelProviders.of(this).get(EstabelecimentoViewModel.class);
+//        estabelecimentoViewModel.getAllEstabelecimentos().observe(this, new Observer<List<Estabelecimento>>() {
+//            @Override
+//            public void onChanged(List<Estabelecimento> estabelecimentos) {
+//                estabelecimentoAdapter.submitList(estabelecimentos);
+//            }
+//        });
 
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
@@ -67,7 +67,7 @@ public class EstabelecimentoActivity extends AppCompatActivity {
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                estabelecimentoViewModel.delete(estabelecimentoAdapter.getEstabelecimentoAt(viewHolder.getAdapterPosition()));
+//                estabelecimentoViewModel.delete(estabelecimentoAdapter.getEstabelecimentoAt(viewHolder.getAdapterPosition()));
                 Toast.makeText(EstabelecimentoActivity.this, "Estabelecimento removido", Toast.LENGTH_SHORT).show();
             }
         }).attachToRecyclerView(recyclerView);
@@ -96,7 +96,7 @@ public class EstabelecimentoActivity extends AppCompatActivity {
             String telefone = data.getStringExtra(AddEditEstabelecimentoActivity.EXTRA_TELEFONE);
 
             Estabelecimento estabelecimento = new Estabelecimento(nome, endereco, telefone);
-            estabelecimentoViewModel.insert(estabelecimento);
+//            estabelecimentoViewModel.insert(estabelecimento);
             Toast.makeText(this, "Estabelecimento salva com sucesso", Toast.LENGTH_SHORT).show();
 
         } else if (requestCode == EDIT_ESTABELECIMENTO_REQUEST && resultCode == RESULT_OK) {
@@ -112,7 +112,7 @@ public class EstabelecimentoActivity extends AppCompatActivity {
 
             Estabelecimento estabelecimento = new Estabelecimento(nome, endereco, telefone);
             estabelecimento.setId(id);
-            estabelecimentoViewModel.update(estabelecimento);
+//            estabelecimentoViewModel.update(estabelecimento);
 
             Toast.makeText(this, "Estabelecimento atualizado", Toast.LENGTH_SHORT).show();
         } else {

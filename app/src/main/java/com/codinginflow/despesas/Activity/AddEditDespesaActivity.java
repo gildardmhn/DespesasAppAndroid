@@ -15,7 +15,7 @@ import com.codinginflow.despesas.R;
 
 public class AddEditDespesaActivity extends AppCompatActivity {
 
-    public static final String EXTRA_ID = "com.codinginflow.despesas.EXTRA_ID";
+    public static final String EXTRA_HASH = "com.codinginflow.despesas.EXTRA_HASH";
     public static final String EXTRA_TITULO = "com.codinginflow.despesas.EXTRA_TITULO";
     public static final String EXTRA_DESCRICAO = "com.codinginflow.despesas.EXTRA_DESCRICAO";
     public static final String EXTRA_TIPO = "com.codinginflow.despesas.EXTRA_TIPO";
@@ -40,7 +40,7 @@ public class AddEditDespesaActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        if(intent.hasExtra(EXTRA_ID)){
+        if(intent.hasExtra(EXTRA_HASH)){
             setTitle("Editar Despesa");
             editTextTitulo.setText(intent.getStringExtra(EXTRA_TITULO));
             editTextDescricao.setText(intent.getStringExtra(EXTRA_DESCRICAO));
@@ -69,9 +69,9 @@ public class AddEditDespesaActivity extends AppCompatActivity {
         data.putExtra(EXTRA_TIPO, tipo);
         data.putExtra(EXTRA_PRECO, preco);
 
-        int id = getIntent().getIntExtra(EXTRA_ID, -1);
-        if(id != -1){
-            data.putExtra(EXTRA_ID, id);
+        String hash = getIntent().getStringExtra(EXTRA_HASH);
+        if(hash != null){
+            data.putExtra(EXTRA_HASH, hash);
         }
 
         setResult(RESULT_OK, data);

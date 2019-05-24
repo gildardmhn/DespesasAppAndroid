@@ -24,9 +24,13 @@ import com.codinginflow.despesas.Model.Despesa;
 import com.codinginflow.despesas.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -41,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
+    private List<Despesa> despesaList = new ArrayList<Despesa>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +95,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+
+
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
@@ -107,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(Despesa despesa) {
                 Intent intent = new Intent(MainActivity.this, AddEditDespesaActivity.class);
-                intent.putExtra(AddEditDespesaActivity.EXTRA_ID, despesa.getId());
+                intent.putExtra(AddEditDespesaActivity.EXTRA_HASH, despesa.getHash());
                 intent.putExtra(AddEditDespesaActivity.EXTRA_TITULO, despesa.getTitulo());
                 intent.putExtra(AddEditDespesaActivity.EXTRA_DESCRICAO, despesa.getDescricao());
                 intent.putExtra(AddEditDespesaActivity.EXTRA_TIPO, despesa.getTipo());
@@ -116,6 +124,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 
     private void inicializarFirebase() {
         FirebaseApp.initializeApp(MainActivity.this);
@@ -146,8 +155,8 @@ public class MainActivity extends AppCompatActivity {
 
         } else if (requestCode == EDIT_DESPESA_REQUEST && resultCode == RESULT_OK) {
 
-            int id = data.getIntExtra(AddEditDespesaActivity.EXTRA_ID, -1);
-            if (id == -1) {
+            String hash = data.getStringExtra(AddEditDespesaActivity.EXTRA_HASH);
+            if (hash == null) {
                 Toast.makeText(this, "Despesa não pode ser atualizada", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -158,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
             Double preco = data.getDoubleExtra(AddEditDespesaActivity.EXTRA_PRECO, 0.0);
 
             Despesa despesa = new Despesa(titulo, descricao, tipo, preco);
-            despesa.setId(id);
+//            despesa.setId(id);
             despesaViewModel.update(despesa);
 
             Toast.makeText(this, "Despesa atualizada", Toast.LENGTH_SHORT).show();

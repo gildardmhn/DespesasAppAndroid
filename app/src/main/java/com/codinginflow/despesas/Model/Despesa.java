@@ -1,6 +1,7 @@
 package com.codinginflow.despesas.Model;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "despesa_table")
@@ -8,20 +9,11 @@ public class Despesa {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
-
+    private String hash;
     private String titulo;
     private String descricao;
     private String tipo;
     private Double preco;
-    private String hash;
-
-    public String getHash() {
-        return hash;
-    }
-
-    public void setHash(String hash) {
-        this.hash = hash;
-    }
 
     public Despesa(String titulo, String descricao, String tipo, Double preco) {
         this.titulo = titulo;
@@ -30,12 +22,24 @@ public class Despesa {
         this.preco = preco;
     }
 
+    @Ignore
+    public Despesa() {
+    }
+
     public void setId(int id) {
         this.id = id;
     }
 
     public int getId() {
         return id;
+    }
+
+    public String getHash() {
+        return hash;
+    }
+
+    public void setHash(String hash) {
+        this.hash = hash;
     }
 
     public String getTitulo() {
