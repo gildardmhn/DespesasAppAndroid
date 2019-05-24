@@ -24,7 +24,7 @@ public class DespesaAdapter extends ListAdapter<Despesa, DespesaAdapter.DespesaH
     private static final DiffUtil.ItemCallback<Despesa> DIFF_CALLBACK = new DiffUtil.ItemCallback<Despesa>() {
         @Override
         public boolean areItemsTheSame(@NonNull Despesa oldItem, @NonNull Despesa newItem) {
-            return oldItem.getId() == newItem.getId();
+            return oldItem.getHash() == newItem.getHash();
         }
 
         @Override

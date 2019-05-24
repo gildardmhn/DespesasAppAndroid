@@ -25,7 +25,7 @@ public class EstabelecimentoAdapter extends ListAdapter<Estabelecimento, Estabel
     private static final DiffUtil.ItemCallback<Estabelecimento> DIFF_CALLBACK = new DiffUtil.ItemCallback<Estabelecimento>() {
         @Override
         public boolean areItemsTheSame(@NonNull Estabelecimento oldItem, @NonNull Estabelecimento newItem) {
-            return oldItem.getId() == newItem.getId();
+            return oldItem.getHash() == newItem.getHash();
         }
 
         @Override

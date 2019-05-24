@@ -7,6 +7,10 @@
         android:title="Apagar todas as despesas"
         app:showAsAction="never"/> -->
     <item
+        android:id="@+id/despesa_menu"
+        android:icon="@drawable/ic_give_money"
+        android:title="Despesas" />
+    <item
         android:id="@+id/estabelecimento_menu"
         android:icon="@drawable/ic_map_with_placeholder"
         android:title="Estabelecimentos" />

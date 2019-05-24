@@ -1,15 +1,5 @@
 package com.codinginflow.despesas.Activity;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -18,8 +8,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.codinginflow.despesas.Adapter.DespesaAdapter;
-import com.codinginflow.despesas.ViewModel.DespesaViewModel;
 import com.codinginflow.despesas.Model.Despesa;
 import com.codinginflow.despesas.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -38,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static final int ADD_DESPESA_REQUEST = 1;
     public static final int EDIT_DESPESA_REQUEST = 2;
-    private DespesaViewModel despesaViewModel;
+
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
@@ -46,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
     private List<Despesa> despesaList = new ArrayList<Despesa>();
+    private DespesaAdapter despesaAdapater = new DespesaAdapter();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         inicializarFirebase();
+        eventoDatabase();
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
         mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
@@ -71,45 +70,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        FloatingActionButton buttonMapa = findViewById(R.id.button_map);
-        buttonMapa.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, MapsActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        RecyclerView recyclerView = findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setHasFixedSize(true);
-
-        final DespesaAdapter despesaAdapater = new DespesaAdapter();
-        recyclerView.setAdapter(despesaAdapater);
-
-        despesaViewModel = ViewModelProviders.of(this).get(DespesaViewModel.class);
-        despesaViewModel.getAllDespesas().observe(this, new Observer<List<Despesa>>() {
-            @Override
-            public void onChanged(List<Despesa> despesas) {
-                despesaAdapater.submitList(despesas);
-            }
-        });
-
-
-
-
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-            @Override
-            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-                return false;
-            }
-
-            @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                despesaViewModel.delete(despesaAdapater.getDespesaAt(viewHolder.getAdapterPosition()));
-                Toast.makeText(MainActivity.this, "Despesa removida", Toast.LENGTH_SHORT).show();
-            }
-        }).attachToRecyclerView(recyclerView);
 
         despesaAdapater.setOnItemClickListener(new DespesaAdapter.onItemClickListener() {
             @Override
@@ -121,6 +81,47 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra(AddEditDespesaActivity.EXTRA_TIPO, despesa.getTipo());
                 intent.putExtra(AddEditDespesaActivity.EXTRA_PRECO, despesa.getPreco());
                 startActivityForResult(intent, EDIT_DESPESA_REQUEST);
+            }
+        });
+    }
+
+    private void eventoDatabase() {
+        databaseReference.child("Despesa").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                despesaList.clear();
+                for(DataSnapshot objSnapshot : dataSnapshot.getChildren()){
+                    Despesa despesa = objSnapshot.getValue(Despesa.class);
+                    despesaList.add(despesa);
+                }
+
+                RecyclerView recyclerView = findViewById(R.id.recycler_view);
+                recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+                recyclerView.setHasFixedSize(true);
+
+                despesaAdapater.submitList(despesaList);
+                recyclerView.setAdapter(despesaAdapater);
+
+//                new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+//                    @Override
+//                    public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+//                        return false;
+//                    }
+//
+//                    @Override
+//                    public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+////                despesaViewModel.delete(despesaAdapater.getDespesaAt(viewHolder.getAdapterPosition()));
+//                        Despesa despesa = despesaAdapater.getDespesaAt(viewHolder.getAdapterPosition());
+//                        databaseReference.child("Despesa").child(despesa.getHash()).removeValue();
+//                        Toast.makeText(MainActivity.this, "Despesa removida", Toast.LENGTH_SHORT).show();
+//                    }
+//                }).attachToRecyclerView(recyclerView);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
     }
@@ -148,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
 
             despesa.setHash(hash);
             databaseReference.child("Despesa").child(despesa.getHash()).setValue(despesa);
-            despesaViewModel.insert(despesa);
+//            despesaViewModel.insert(despesa);
 
 
             Toast.makeText(this, "Despesa salva com sucesso", Toast.LENGTH_SHORT).show();
@@ -167,9 +168,8 @@ public class MainActivity extends AppCompatActivity {
             Double preco = data.getDoubleExtra(AddEditDespesaActivity.EXTRA_PRECO, 0.0);
 
             Despesa despesa = new Despesa(titulo, descricao, tipo, preco);
-//            despesa.setId(id);
-            despesaViewModel.update(despesa);
-
+            despesa.setHash(hash);
+            databaseReference.child("Despesa").child(despesa.getHash()).setValue(despesa);
             Toast.makeText(this, "Despesa atualizada", Toast.LENGTH_SHORT).show();
 
         } else {
