@@ -28,13 +28,16 @@ public class AddUsuarioActivity extends AppCompatActivity {
     private EditText editTextSenha;
     private EditText editTextConfirmaSenha;
     private Button loginButton;
+    private Button cadastrarButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro);
 
-        loginButton = findViewById(R.id.loginUsuarioBtn);
+
+        cadastrarButton = findViewById(R.id.btn_cadastrarUsuario);
+        loginButton = findViewById(R.id.btn_loginUsuario);
         editTextNome = findViewById(R.id.edit_text_usu_nome);
         editTextEmail = findViewById(R.id.edit_text_usu_email);
         editTextTelefone = findViewById(R.id.edit_text_usu_telefone);
@@ -44,10 +47,25 @@ public class AddUsuarioActivity extends AppCompatActivity {
         editTextAntigaSenha.setText("nada");
         editTextAntigaSenha.setVisibility(View.GONE);
 
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        cadastrarButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveUsuario();
+            }
+        });
+
         setTitle("Cadastro de usuário");
 
         if(getIntent().hasExtra(EXTRA_USU_HASH)){
             setTitle("Alterar dados");
+            cadastrarButton.setText("Atualizar dados");
             editTextEmail.setEnabled(false);
             loginButton.setVisibility(View.GONE);
 
@@ -60,6 +78,7 @@ public class AddUsuarioActivity extends AppCompatActivity {
 
 
     }
+
 
     private void verificarSalva(String senha, String nome, String email, String telefone, String confirmaSenha){
         if(senha.equals(confirmaSenha)){
@@ -106,26 +125,4 @@ public class AddUsuarioActivity extends AppCompatActivity {
         }
 
     }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.add_usuario_menu,menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.save_usuario:
-                saveUsuario();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-
-    }
-
-
 }
