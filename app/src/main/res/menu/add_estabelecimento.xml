@@ -7,4 +7,10 @@
         android:title="Salvar"
         app:showAsAction="ifRoom"/>
 
+    <item
+        android:id="@+id/delete_estabelecimento"
+        android:icon="@drawable/ic_delete"
+        android:title="Deletar"
+        app:showAsAction="ifRoom"/>
+
 </menu>

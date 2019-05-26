@@ -31,6 +31,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import static com.codinginflow.despesas.Activity.AddEditDespesaActivity.EXTRA_HASH;
+import static com.codinginflow.despesas.Activity.AddEditDespesaActivity.EXTRA_TITULO;
+
 public class MainActivity extends AppCompatActivity {
 
     public static final int ADD_DESPESA_REQUEST = 1;
@@ -76,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(Despesa despesa) {
                 Intent intent = new Intent(MainActivity.this, AddEditDespesaActivity.class);
                 intent.putExtra(AddEditDespesaActivity.EXTRA_HASH, despesa.getHash());
-                intent.putExtra(AddEditDespesaActivity.EXTRA_TITULO, despesa.getTitulo());
+                intent.putExtra(EXTRA_TITULO, despesa.getTitulo());
                 intent.putExtra(AddEditDespesaActivity.EXTRA_DESCRICAO, despesa.getDescricao());
                 intent.putExtra(AddEditDespesaActivity.EXTRA_TIPO, despesa.getTipo());
                 intent.putExtra(AddEditDespesaActivity.EXTRA_PRECO, despesa.getPreco());
@@ -102,21 +105,6 @@ public class MainActivity extends AppCompatActivity {
                 despesaAdapater.submitList(despesaList);
                 recyclerView.setAdapter(despesaAdapater);
 
-//                new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-//                    @Override
-//                    public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-//                        return false;
-//                    }
-//
-//                    @Override
-//                    public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-////                despesaViewModel.delete(despesaAdapater.getDespesaAt(viewHolder.getAdapterPosition()));
-//                        Despesa despesa = despesaAdapater.getDespesaAt(viewHolder.getAdapterPosition());
-//                        databaseReference.child("Despesa").child(despesa.getHash()).removeValue();
-//                        Toast.makeText(MainActivity.this, "Despesa removida", Toast.LENGTH_SHORT).show();
-//                    }
-//                }).attachToRecyclerView(recyclerView);
-
             }
 
             @Override
@@ -139,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == ADD_DESPESA_REQUEST && resultCode == RESULT_OK) {
-            String titulo = data.getStringExtra(AddEditDespesaActivity.EXTRA_TITULO);
+            String titulo = data.getStringExtra(EXTRA_TITULO);
             String descricao = data.getStringExtra(AddEditDespesaActivity.EXTRA_DESCRICAO);
             String tipo = data.getStringExtra(AddEditDespesaActivity.EXTRA_TIPO);
             Double preco = data.getDoubleExtra(AddEditDespesaActivity.EXTRA_PRECO, 0.0);
@@ -162,15 +150,24 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
 
-            String titulo = data.getStringExtra(AddEditDespesaActivity.EXTRA_TITULO);
-            String descricao = data.getStringExtra(AddEditDespesaActivity.EXTRA_DESCRICAO);
-            String tipo = data.getStringExtra(AddEditDespesaActivity.EXTRA_TIPO);
-            Double preco = data.getDoubleExtra(AddEditDespesaActivity.EXTRA_PRECO, 0.0);
+            else {
+                if(data.hasExtra(EXTRA_TITULO)){
+                    String titulo = data.getStringExtra(EXTRA_TITULO);
+                    String descricao = data.getStringExtra(AddEditDespesaActivity.EXTRA_DESCRICAO);
+                    String tipo = data.getStringExtra(AddEditDespesaActivity.EXTRA_TIPO);
+                    Double preco = data.getDoubleExtra(AddEditDespesaActivity.EXTRA_PRECO, 0.0);
 
-            Despesa despesa = new Despesa(titulo, descricao, tipo, preco);
-            despesa.setHash(hash);
-            databaseReference.child("Despesa").child(despesa.getHash()).setValue(despesa);
-            Toast.makeText(this, "Despesa atualizada", Toast.LENGTH_SHORT).show();
+                    Despesa despesa = new Despesa(titulo, descricao, tipo, preco);
+                    despesa.setHash(hash);
+                    databaseReference.child("Despesa").child(despesa.getHash()).setValue(despesa);
+                    Toast.makeText(this, "Despesa atualizada", Toast.LENGTH_SHORT).show();
+                } else {
+                    Despesa despesa = new Despesa();
+                    despesa.setHash(hash);
+                    databaseReference.child("Despesa").child(despesa.getHash()).removeValue();
+                }
+
+            }
 
         } else {
             Toast.makeText(this, "Despesa não salva", Toast.LENGTH_SHORT).show();
@@ -191,10 +188,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         switch (item.getItemId()) {
-            /*case R.id.delete_all_despesas:
-                despesaViewModel.deleteAllDespesas();
-                Toast.makeText(this, "Todas as despesas foram removidas", Toast.LENGTH_SHORT).show();
-                return true;*/
             case R.id.estabelecimento_menu:
                 startActivity(new Intent(getApplicationContext(), EstabelecimentoActivity.class));
                 return true;

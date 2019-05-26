@@ -88,10 +88,26 @@ public class AddEditEstabelecimentoActivity extends AppCompatActivity {
             case R.id.save_estabelecimento:
                 saveEstabelecimento();
                 return true;
+            case R.id.delete_estabelecimento:
+                deleteEstabelecimento();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
 
+    }
+
+    private void deleteEstabelecimento() {
+        Intent intent = getIntent();
+        if(intent.hasExtra(EXTRA_HASH_EST)){
+            String hash = intent.getStringExtra(EXTRA_HASH_EST);
+            Intent deleteHash = new Intent();
+            deleteHash.putExtra(EXTRA_HASH_EST, hash);
+            setResult(RESULT_OK, deleteHash);
+            finish();
+        }else {
+            Toast.makeText(this, "Não pode remover um estabelecimento inexistante", Toast.LENGTH_SHORT).show();
+        }
     }
 
 }

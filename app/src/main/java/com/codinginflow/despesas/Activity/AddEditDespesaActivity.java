@@ -51,6 +51,18 @@ public class AddEditDespesaActivity extends AppCompatActivity {
         }
 
     }
+    private void delteDespesa() {
+        Intent intent = getIntent();
+        if(intent.hasExtra(EXTRA_HASH)){
+            String hash = intent.getStringExtra(EXTRA_HASH);
+            Intent deleteHash = new Intent();
+            deleteHash.putExtra(EXTRA_HASH, hash);
+            setResult(RESULT_OK, deleteHash);
+            finish();
+        }else {
+            Toast.makeText(this, "Não pode remover uma despesa inexistante", Toast.LENGTH_SHORT).show();
+        }
+    }
 
     private void saveDespesa() {
         String titulo = editTextTitulo.getText().toString();
@@ -91,9 +103,14 @@ public class AddEditDespesaActivity extends AppCompatActivity {
             case R.id.save_despesa:
                 saveDespesa();
                 return true;
+
+            case R.id.delete_despesa:
+                delteDespesa();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
 
     }
+
 }

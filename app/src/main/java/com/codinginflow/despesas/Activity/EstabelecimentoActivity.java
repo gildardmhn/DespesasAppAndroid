@@ -32,11 +32,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import static com.codinginflow.despesas.Activity.AddEditEstabelecimentoActivity.EXTRA_NOME;
+
 public class EstabelecimentoActivity extends AppCompatActivity {
     public static final int ADD_ESTABELECIMENTO_REQUEST = 1;
     public static final int EDIT_ESTABELECIMENTO_REQUEST = 2;
 
-//    private EstabelecimentoViewModel estabelecimentoViewModel;
 
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
@@ -61,20 +62,6 @@ public class EstabelecimentoActivity extends AppCompatActivity {
                 startActivityForResult(intent, ADD_ESTABELECIMENTO_REQUEST);
             }
         });
-
-
-//        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-//            @Override
-//            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-//                return false;
-//            }
-//
-//            @Override
-//            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-////                estabelecimentoViewModel.delete(estabelecimentoAdapter.getEstabelecimentoAt(viewHolder.getAdapterPosition()));
-//                Toast.makeText(EstabelecimentoActivity.this, "Estabelecimento removido", Toast.LENGTH_SHORT).show();
-//            }
-//        }).attachToRecyclerView(recyclerView);
 
         estabelecimentoAdapter.setOnItemClickListener(new EstabelecimentoAdapter.onItemClickListener() {
             @Override
@@ -126,11 +113,11 @@ public class EstabelecimentoActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == ADD_ESTABELECIMENTO_REQUEST && resultCode == RESULT_OK) {
-            String nome = data.getStringExtra(AddEditEstabelecimentoActivity.EXTRA_NOME);
+            String nome = data.getStringExtra(EXTRA_NOME);
             String endereco = data.getStringExtra(AddEditEstabelecimentoActivity.EXTRA_ENDERECO);
             String telefone = data.getStringExtra(AddEditEstabelecimentoActivity.EXTRA_TELEFONE);
-
             String hash = UUID.randomUUID().toString();
+
             Estabelecimento estabelecimento = new Estabelecimento(nome, endereco, telefone);
             estabelecimento.setHash(hash);
             databaseReference.child("Estabelecimento").child(estabelecimento.getHash()).setValue(estabelecimento);
@@ -138,20 +125,29 @@ public class EstabelecimentoActivity extends AppCompatActivity {
 
         } else if (requestCode == EDIT_ESTABELECIMENTO_REQUEST && resultCode == RESULT_OK) {
             String hash = data.getStringExtra(AddEditEstabelecimentoActivity.EXTRA_HASH_EST);
+
             if (hash == null) {
                 Toast.makeText(this, "Estabelecimento não pode ser atualizado", Toast.LENGTH_SHORT).show();
                 return;
+            } else {
+                if(data.hasExtra(EXTRA_NOME)){
+                    String nome = data.getStringExtra(AddEditEstabelecimentoActivity.EXTRA_NOME);
+                    String endereco = data.getStringExtra(AddEditEstabelecimentoActivity.EXTRA_ENDERECO);
+                    String telefone = data.getStringExtra(AddEditEstabelecimentoActivity.EXTRA_TELEFONE);
+
+                    Estabelecimento estabelecimento = new Estabelecimento(nome, endereco, telefone);
+                    estabelecimento.setHash(hash);
+                    databaseReference.child("Estabelecimento").child(estabelecimento.getHash()).setValue(estabelecimento);
+
+                    Toast.makeText(this, "Estabelecimento atualizado", Toast.LENGTH_SHORT).show();
+                } else {
+                    Estabelecimento estabelecimento = new Estabelecimento();
+                    estabelecimento.setHash(hash);
+                    databaseReference.child("Estabelecimento").child(estabelecimento.getHash()).removeValue();
+                }
             }
 
-            String nome = data.getStringExtra(AddEditEstabelecimentoActivity.EXTRA_NOME);
-            String endereco = data.getStringExtra(AddEditEstabelecimentoActivity.EXTRA_ENDERECO);
-            String telefone = data.getStringExtra(AddEditEstabelecimentoActivity.EXTRA_TELEFONE);
 
-            Estabelecimento estabelecimento = new Estabelecimento(nome, endereco, telefone);
-            estabelecimento.setHash(hash);
-            databaseReference.child("Estabelecimento").child(estabelecimento.getHash()).setValue(estabelecimento);
-
-            Toast.makeText(this, "Estabelecimento atualizado", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, "Estabelecimento não salvo", Toast.LENGTH_SHORT).show();
         }
