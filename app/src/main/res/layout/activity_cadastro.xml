@@ -22,6 +22,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Nome"
+            android:inputType="textPersonName"
             android:textSize="20sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -38,6 +39,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Email"
+            android:inputType="textEmailAddress"
             android:textSize="20sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -54,23 +56,9 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Telefone"
+            android:inputType="phone"
             android:textSize="20sp" />
     </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:focusable="true"
-        android:focusableInTouchMode="true"/>
-
-    <EditText
-        android:id="@+id/edit_text_usu_antiga_senha"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Antiga senha"
-        android:textSize="20sp" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
@@ -84,7 +72,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Nova senha"
+            android:hint="Senha"
+            android:inputType="textPassword"
             android:textSize="20sp" />
 
     </com.google.android.material.textfield.TextInputLayout>

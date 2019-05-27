@@ -10,11 +10,11 @@ public class Conexao {
     private static FirebaseAuth.AuthStateListener authStateListener;
     private static FirebaseUser firebaseUser;
 
-    private Conexao(){
+    private Conexao() {
     }
 
-    private static FirebaseAuth getFirebaseAuth(){
-        if(firebaseAuth == null){
+    public static FirebaseAuth getFirebaseAuth() {
+        if (firebaseAuth == null) {
             inicializarFirebaseAuth();
         }
         return firebaseAuth;
@@ -26,7 +26,7 @@ public class Conexao {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
-                if(user != null){
+                if (user != null) {
                     firebaseUser = user;
                 }
             }
@@ -34,11 +34,11 @@ public class Conexao {
         firebaseAuth.addAuthStateListener(authStateListener);
     }
 
-    public static FirebaseUser getFirebaseUser(){
+    public static FirebaseUser getFirebaseUser() {
         return firebaseUser;
     }
 
-    public static void logout(){
+    public static void logout() {
         firebaseAuth.signOut();
     }
 }

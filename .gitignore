@@ -12,3 +12,6 @@
 /captures
 .externalNativeBuild
 .idea/vcs.xml
+
+app/app.iml
+.idea/gradle.xml

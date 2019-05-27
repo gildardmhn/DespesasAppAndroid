@@ -17,10 +17,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.codinginflow.despesas.Adapter.DespesaAdapter;
+import com.codinginflow.despesas.Conexao.Conexao;
 import com.codinginflow.despesas.Model.Despesa;
 import com.codinginflow.despesas.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -39,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
     public static final int ADD_DESPESA_REQUEST = 1;
     public static final int EDIT_DESPESA_REQUEST = 2;
 
-
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
 
@@ -47,6 +49,9 @@ public class MainActivity extends AppCompatActivity {
     DatabaseReference databaseReference;
     private List<Despesa> despesaList = new ArrayList<Despesa>();
     private DespesaAdapter despesaAdapater = new DespesaAdapter();
+
+    private FirebaseAuth auth;
+    private FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,12 +93,34 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void eventoClick() {
+        Conexao.logout();
+        finish();
+        // Ir para login
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        auth = Conexao.getFirebaseAuth();
+        user = Conexao.getFirebaseUser();
+        verificaUsuario();
+    }
+
+    private void verificaUsuario() {
+        if (user == null) {
+            finish();
+        } else {
+            Toast.makeText(this, "Usuário: " + user.getEmail(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
     private void eventoDatabase() {
         databaseReference.child("Despesa").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 despesaList.clear();
-                for(DataSnapshot objSnapshot : dataSnapshot.getChildren()){
+                for (DataSnapshot objSnapshot : dataSnapshot.getChildren()) {
                     Despesa despesa = objSnapshot.getValue(Despesa.class);
                     despesaList.add(despesa);
                 }
@@ -148,10 +175,8 @@ public class MainActivity extends AppCompatActivity {
             if (hash == null) {
                 Toast.makeText(this, "Despesa não pode ser atualizada", Toast.LENGTH_SHORT).show();
                 return;
-            }
-
-            else {
-                if(data.hasExtra(EXTRA_TITULO)){
+            } else {
+                if (data.hasExtra(EXTRA_TITULO)) {
                     String titulo = data.getStringExtra(EXTRA_TITULO);
                     String descricao = data.getStringExtra(AddEditDespesaActivity.EXTRA_DESCRICAO);
                     String tipo = data.getStringExtra(AddEditDespesaActivity.EXTRA_TIPO);
@@ -192,7 +217,8 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), EstabelecimentoActivity.class));
                 return true;
             case R.id.sair_menu:
-                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                eventoClick();
+//                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                 return true;
             case R.id.usuario_menu:
                 startActivity(new Intent(getApplicationContext(), UsuarioActivity.class));
