@@ -6,6 +6,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -53,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private FirebaseUser user;
 
+    private TextView textViewHeader;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +69,16 @@ public class MainActivity extends AppCompatActivity {
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        textViewHeader = (TextView) findViewById(R.id.text_view_header);
+
+        FirebaseUser usuarioAtual = auth.getCurrentUser();
+
+        if (usuarioAtual == null) {
+            textViewHeader.setText("Usuário não logado!");
+        } else {
+            textViewHeader.setText(usuarioAtual.getEmail());
+        }
 
         // startActivity(new Intent(getApplicationContext(), LoginActivity.class));
 
@@ -104,6 +117,15 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         auth = Conexao.getFirebaseAuth();
         user = Conexao.getFirebaseUser();
+
+//        FirebaseUser usuarioAtual = auth.getCurrentUser();
+//
+//        if (usuarioAtual == null) {
+//            Toast.makeText(this, "Seja bem vindo " + usuarioAtual.getEmail(), Toast.LENGTH_SHORT).show();
+//        } else {
+//            Toast.makeText(this, "Usuário não logado!", Toast.LENGTH_SHORT).show();
+//        }
+
         verificaUsuario();
     }
 
