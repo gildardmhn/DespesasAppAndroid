@@ -28,9 +28,6 @@ public class LoginActivity extends AppCompatActivity {
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
 
-    private TextInputEditText email;
-    private TextInputEditText input_text;
-
     private TextInputEditText inputEmail;
     private TextInputEditText inputSenha;
 
@@ -46,18 +43,8 @@ public class LoginActivity extends AppCompatActivity {
         setTitle("Entrar");
 
 
-        inicializarCampos();
+        inicializarCampos(); // finds...
         inicializarFirebase();
-
-
-//        btnCadastro.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(LoginActivity.this, AddUsuarioActivity.class);
-//                startActivityForResult(intent, ADD_USUARIO_LOGIN_REQUEST);
-//            }
-//        });
-
     }
 
     @Override
@@ -81,27 +68,14 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void btnLogin(View view) {
-        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-        finish();
+        String email = inputEmail.getText().toString().trim();
+        String senha = inputEmail.getText().toString().trim();
+        login(email, senha);
     }
 
-    private void eventoClicks() {
-        btnCadastro.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), AddUsuarioActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String email = inputEmail.getText().toString().trim();
-                String senha = inputEmail.getText().toString().trim();
-                login(email, senha);
-            }
-        });
+    public void btnCadastro(View view) {
+        Intent intent = new Intent(getApplicationContext(), AddUsuarioActivity.class);
+        startActivity(intent);
     }
 
     private void login(String email, String senha) {
@@ -117,27 +91,4 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-
-
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//
-//        if (requestCode == ADD_USUARIO_LOGIN_REQUEST && resultCode == RESULT_OK) {
-//            String nome = data.getStringExtra(AddUsuarioActivity.EXTRA_USU_NOME);
-//            String email = data.getStringExtra(AddUsuarioActivity.EXTRA_USU_EMAIL);
-//            String telefone = data.getStringExtra(AddUsuarioActivity.EXTRA_USU_TELEFONE);
-//            String senha = data.getStringExtra(AddUsuarioActivity.EXTRA_USU_SENHA);
-//            String hash = UUID.randomUUID().toString();
-//
-//            Usuario usuario = new Usuario(nome, email, telefone, senha);
-//            usuario.setHash(hash);
-//
-//            databaseReference.child("Usuario").child(usuario.getHash()).setValue(usuario);
-//
-//            Toast.makeText(this, "Usuario salvo", Toast.LENGTH_SHORT).show();
-//        } else {
-//            Toast.makeText(this, "Usuario não salvo", Toast.LENGTH_SHORT).show();
-//        }
-//    }
 }
