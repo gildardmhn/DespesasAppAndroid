@@ -76,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void btnLogin(View view) {
         String email = inputEmail.getText().toString().trim();
-        String senha = inputEmail.getText().toString().trim();
+        String senha = inputSenha.getText().toString().trim();
 
         if (email.isEmpty() || senha.isEmpty()) {
             Toast.makeText(this, "Preencha os campos!", Toast.LENGTH_SHORT).show();
@@ -109,10 +109,6 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(LoginActivity.this, "Erro de conexão!", Toast.LENGTH_SHORT).show();
                     } catch (Exception e) {
                         System.out.println(e.getMessage());
-                    } finally {
-                        // TODO: Enquanto não descobre o erro...
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        startActivity(intent);
                     }
                     Toast.makeText(LoginActivity.this, "Email ou senha inválidos!", Toast.LENGTH_SHORT).show();
                 } else {

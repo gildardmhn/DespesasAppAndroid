@@ -2,6 +2,7 @@ package com.codinginflow.despesas.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -70,18 +71,6 @@ public class MainActivity extends AppCompatActivity {
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-//        textViewHeader = (TextView) findViewById(R.id.text_view_header);
-//
-//        FirebaseUser usuarioAtual = auth.getCurrentUser();
-//
-//        if (usuarioAtual == null) {
-//            textViewHeader.setText("Usuário não logado!");
-//        } else {
-//            textViewHeader.setText(usuarioAtual.getEmail());
-//        }
-
-        // startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-
         FloatingActionButton buttonAddDespesa = findViewById(R.id.button_add_despesa);
         buttonAddDespesa.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,7 +122,8 @@ public class MainActivity extends AppCompatActivity {
         if (user == null) {
             finish();
         } else {
-            Toast.makeText(this, "Usuário: " + user.getEmail(), Toast.LENGTH_SHORT).show();
+        //  Toast.makeText(this, "Usuário: " + user.getEmail(), Toast.LENGTH_SHORT).show();
+            System.out.println(user.getEmail());
         }
     }
 
