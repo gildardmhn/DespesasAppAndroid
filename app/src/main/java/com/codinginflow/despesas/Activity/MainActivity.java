@@ -70,15 +70,15 @@ public class MainActivity extends AppCompatActivity {
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        textViewHeader = (TextView) findViewById(R.id.text_view_header);
-
-        FirebaseUser usuarioAtual = auth.getCurrentUser();
-
-        if (usuarioAtual == null) {
-            textViewHeader.setText("Usuário não logado!");
-        } else {
-            textViewHeader.setText(usuarioAtual.getEmail());
-        }
+//        textViewHeader = (TextView) findViewById(R.id.text_view_header);
+//
+//        FirebaseUser usuarioAtual = auth.getCurrentUser();
+//
+//        if (usuarioAtual == null) {
+//            textViewHeader.setText("Usuário não logado!");
+//        } else {
+//            textViewHeader.setText(usuarioAtual.getEmail());
+//        }
 
         // startActivity(new Intent(getApplicationContext(), LoginActivity.class));
 

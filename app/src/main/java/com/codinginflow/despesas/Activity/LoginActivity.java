@@ -17,8 +17,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseNetworkException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -88,29 +91,35 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void login(String email, String senha) {
-//        auth.signInWithEmailAndPassword(email, senha).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-//            @Override
-//            public void onComplete(@NonNull Task<AuthResult> task) {
-//                if (task.isSuccessful()) {
-//                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-//                    startActivity(intent);
-//                } else {
-//                    Toast.makeText(LoginActivity.this, "Email ou senha errados!", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
-        auth.signInWithEmailAndPassword(email, senha)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            FirebaseUser user = auth.getCurrentUser();
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            startActivity(intent);
-                        } else {
-                            Toast.makeText(LoginActivity.this, "Email ou senha errados!", Toast.LENGTH_SHORT).show();
-                        }
+        auth.signInWithEmailAndPassword(email, senha).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                System.out.println(task.getException());
+
+                if (!task.isSuccessful()) {
+                    try {
+                        throw task.getException();
+                    } catch (FirebaseAuthInvalidUserException e) {
+                        inputEmail.setError("Email inválido!");
+                        inputEmail.requestFocus();
+                    } catch (FirebaseAuthInvalidCredentialsException e) {
+                        inputSenha.setError("Senha inválida!");
+                        inputSenha.requestFocus();
+                    } catch (FirebaseNetworkException e) {
+                        Toast.makeText(LoginActivity.this, "Erro de conexão!", Toast.LENGTH_SHORT).show();
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    } finally {
+                        // TODO: Enquanto não descobre o erro...
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(intent);
                     }
-                });
+                    Toast.makeText(LoginActivity.this, "Email ou senha inválidos!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
     }
 }

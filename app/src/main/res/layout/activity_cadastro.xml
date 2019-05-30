@@ -58,6 +58,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Confirmar senha"
+            android:inputType="textPassword"
             android:textSize="20sp"
             app:passwordToggleEnabled="true" />
 

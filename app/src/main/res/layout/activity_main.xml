@@ -12,15 +12,9 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:background="@color/background"
-        app:headerLayout="@layout/header"
         app:itemIconTint="@color/darkGrey"
         app:itemTextColor="@color/darkGrey"
         app:menu="@menu/main_menu" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/background"></LinearLayout>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
