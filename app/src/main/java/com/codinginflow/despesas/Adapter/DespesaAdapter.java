@@ -50,7 +50,7 @@ public class DespesaAdapter extends ListAdapter<Despesa, DespesaAdapter.DespesaH
         Despesa currentDespesa = getItem(position);
         holder.textViewTitulo.setText(currentDespesa.getTitulo());
         holder.textViewDescricao.setText(currentDespesa.getDescricao());
-        holder.textViewPreco.setText(String.valueOf(currentDespesa.getPreco() + " R$"));
+        holder.textViewPreco.setText((currentDespesa.getPreco().toString().replace('.',',') + " R$"));
         holder.textViewTipo.setText(currentDespesa.getTipo());
     }
 

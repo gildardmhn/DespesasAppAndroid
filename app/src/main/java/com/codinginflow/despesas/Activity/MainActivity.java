@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra(EXTRA_TITULO, despesa.getTitulo());
                 intent.putExtra(AddEditDespesaActivity.EXTRA_DESCRICAO, despesa.getDescricao());
                 intent.putExtra(AddEditDespesaActivity.EXTRA_TIPO, despesa.getTipo());
-                intent.putExtra(AddEditDespesaActivity.EXTRA_PRECO, despesa.getPreco().toString());
+                intent.putExtra(AddEditDespesaActivity.EXTRA_PRECO, despesa.getPreco().toString().replace('.',','));
                 startActivityForResult(intent, EDIT_DESPESA_REQUEST);
             }
         });

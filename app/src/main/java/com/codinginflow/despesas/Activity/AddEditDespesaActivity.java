@@ -68,7 +68,7 @@ public class AddEditDespesaActivity extends AppCompatActivity {
         String titulo = editTextTitulo.getText().toString();
         String descricao = editTextDescricao.getText().toString();
         String tipo = editTextTipo.getText().toString();
-        Double preco = Double.parseDouble(editTextPreco.getText().toString());
+        Double preco = Double.parseDouble(editTextPreco.getText().toString().replace(',','.'));
 
         if (titulo.trim().isEmpty() || descricao.trim().isEmpty() || tipo.trim().isEmpty() || preco.isNaN()) {
             Toast.makeText(this, "Preencha as informações", Toast.LENGTH_SHORT).show();
