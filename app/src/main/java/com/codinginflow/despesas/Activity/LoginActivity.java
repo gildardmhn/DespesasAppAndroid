@@ -3,6 +3,7 @@ package com.codinginflow.despesas.Activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -41,6 +42,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private FirebaseAuth auth;
 
+    private ProgressDialog mProgress;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +53,12 @@ public class LoginActivity extends AppCompatActivity {
 
         inicializarCampos(); // finds...
         inicializarFirebase();
+
+        mProgress = new ProgressDialog(this);
+        mProgress.setTitle("Logando...");
+        mProgress.setMessage("Prepare o seu bolso...");
+        mProgress.setCancelable(false);
+        mProgress.setIndeterminate(true);
     }
 
     @Override
@@ -64,6 +73,11 @@ public class LoginActivity extends AppCompatActivity {
 
         btnLogin = findViewById(R.id.btn_login);
         btnCadastro = findViewById(R.id.btn_cadastro);
+    }
+
+    protected void limparCampos() {
+        inputEmail.setText("");
+        inputSenha.setText("");
     }
 
     private void inicializarFirebase() {
@@ -91,6 +105,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void login(String email, String senha) {
+        mProgress.show();
         auth.signInWithEmailAndPassword(email, senha).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -98,22 +113,29 @@ public class LoginActivity extends AppCompatActivity {
 
                 if (!task.isSuccessful()) {
                     try {
+                        mProgress.dismiss();
                         throw task.getException();
                     } catch (FirebaseAuthInvalidUserException e) {
+                        mProgress.dismiss();
                         inputEmail.setError("Email inválido!");
                         inputEmail.requestFocus();
                     } catch (FirebaseAuthInvalidCredentialsException e) {
+                        mProgress.dismiss();
                         inputSenha.setError("Senha inválida!");
                         inputSenha.requestFocus();
                     } catch (FirebaseNetworkException e) {
+                        mProgress.dismiss();
                         Toast.makeText(LoginActivity.this, "Erro de conexão!", Toast.LENGTH_SHORT).show();
                     } catch (Exception e) {
+                        mProgress.dismiss();
                         System.out.println(e.getMessage());
                     }
                     Toast.makeText(LoginActivity.this, "Email ou senha inválidos!", Toast.LENGTH_SHORT).show();
                 } else {
+                    mProgress.dismiss();
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
+                    limparCampos();
                 }
             }
         });
