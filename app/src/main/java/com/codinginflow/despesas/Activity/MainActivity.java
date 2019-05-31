@@ -109,9 +109,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.estabelecimento_menu:
                 startActivity(new Intent(getApplicationContext(), EstabelecimentoActivity.class));
                 break;
-            case R.id.usuario_menu:
-                startActivity(new Intent(getApplicationContext(), UsuarioActivity.class));
-                break;
+//            case R.id.usuario_menu:
+//                startActivity(new Intent(getApplicationContext(), UsuarioActivity.class));
+//                break;
             case R.id.sair_menu:
                 eventoClick();
                 break;
@@ -200,6 +200,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             Despesa despesa = new Despesa(titulo, descricao, tipo, preco);
 
+            FirebaseUser currentFbUser = FirebaseAuth.getInstance().getCurrentUser();
+            String userUid = currentFbUser.getUid();
+            despesa.setUidUsuario(userUid);
+
             despesa.setHash(hash);
             databaseReference.child("Despesa").child(despesa.getHash()).setValue(despesa);
 //            despesaViewModel.insert(despesa);
@@ -257,9 +261,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.estabelecimento_menu:
                 startActivity(new Intent(getApplicationContext(), EstabelecimentoActivity.class));
                 return true;
-            case R.id.usuario_menu:
-                startActivity(new Intent(getApplicationContext(), UsuarioActivity.class));
-                return true;
+//            case R.id.usuario_menu:
+//                startActivity(new Intent(getApplicationContext(), UsuarioActivity.class));
+//                return true;
             case R.id.sair_menu:
                 eventoClick();
 //                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
