@@ -224,7 +224,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     String tipo = data.getStringExtra(AddEditDespesaActivity.EXTRA_TIPO);
                     Double preco = data.getDoubleExtra(AddEditDespesaActivity.EXTRA_PRECO, 0.0);
 
+
                     Despesa despesa = new Despesa(titulo, descricao, tipo, preco);
+
+                    FirebaseUser currentFbUser = FirebaseAuth.getInstance().getCurrentUser();
+                    String userUid = currentFbUser.getUid();
+                    despesa.setUidUsuario(userUid);
+
                     despesa.setHash(hash);
                     databaseReference.child("Despesa").child(despesa.getHash()).setValue(despesa);
                     Toast.makeText(this, "Despesa atualizada", Toast.LENGTH_SHORT).show();
