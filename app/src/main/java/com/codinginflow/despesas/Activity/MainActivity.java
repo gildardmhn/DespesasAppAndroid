@@ -23,6 +23,7 @@ import com.codinginflow.despesas.Conexao.Conexao;
 import com.codinginflow.despesas.Model.Despesa;
 import com.codinginflow.despesas.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -39,7 +40,7 @@ import java.util.UUID;
 import static com.codinginflow.despesas.Activity.AddEditDespesaActivity.EXTRA_HASH;
 import static com.codinginflow.despesas.Activity.AddEditDespesaActivity.EXTRA_TITULO;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     public static final int ADD_DESPESA_REQUEST = 1;
     public static final int EDIT_DESPESA_REQUEST = 2;
@@ -64,6 +65,10 @@ public class MainActivity extends AppCompatActivity {
 
         inicializarFirebase();
         eventoDatabase();
+
+        // Drawe menu
+        NavigationView navigationView = findViewById(R.id.drawer_navigation);
+        navigationView.setNavigationItemSelectedListener(this);
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
         mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
@@ -95,6 +100,27 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.despesa_menu:
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                break;
+            case R.id.estabelecimento_menu:
+                startActivity(new Intent(getApplicationContext(), EstabelecimentoActivity.class));
+                break;
+//            case R.id.usuario_menu:
+//                startActivity(new Intent(getApplicationContext(), UsuarioActivity.class));
+//                break;
+            case R.id.sair_menu:
+                eventoClick();
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+        return true;
+    }
+
     private void eventoClick() {
         Conexao.logout();
         finish();
@@ -122,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
         if (user == null) {
             finish();
         } else {
-        //  Toast.makeText(this, "Usuário: " + user.getEmail(), Toast.LENGTH_SHORT).show();
+            //  Toast.makeText(this, "Usuário: " + user.getEmail(), Toast.LENGTH_SHORT).show();
             System.out.println(user.getEmail());
         }
     }
@@ -173,6 +199,10 @@ public class MainActivity extends AppCompatActivity {
             String hash = UUID.randomUUID().toString();
 
             Despesa despesa = new Despesa(titulo, descricao, tipo, preco);
+
+            FirebaseUser currentFbUser = FirebaseAuth.getInstance().getCurrentUser();
+            String userUid = currentFbUser.getUid();
+            despesa.setUidUsuario(userUid);
 
             despesa.setHash(hash);
             databaseReference.child("Despesa").child(despesa.getHash()).setValue(despesa);
@@ -225,15 +255,18 @@ public class MainActivity extends AppCompatActivity {
         }
 
         switch (item.getItemId()) {
+            case R.id.despesa_menu:
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                return true;
             case R.id.estabelecimento_menu:
                 startActivity(new Intent(getApplicationContext(), EstabelecimentoActivity.class));
                 return true;
+//            case R.id.usuario_menu:
+//                startActivity(new Intent(getApplicationContext(), UsuarioActivity.class));
+//                return true;
             case R.id.sair_menu:
                 eventoClick();
 //                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                return true;
-            case R.id.usuario_menu:
-                startActivity(new Intent(getApplicationContext(), UsuarioActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

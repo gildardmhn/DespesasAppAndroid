@@ -14,10 +14,10 @@
         android:id="@+id/estabelecimento_menu"
         android:icon="@drawable/ic_map_with_placeholder"
         android:title="Estabelecimentos" />
-    <item
-        android:id="@+id/usuario_menu"
-        android:icon="@drawable/ic_user_male_black_shape"
-        android:title="Usuários" />
+    <!--<item-->
+        <!--android:id="@+id/usuario_menu"-->
+        <!--android:icon="@drawable/ic_user_male_black_shape"-->
+        <!--android:title="Usuários" />-->
     <item
         android:id="@+id/sair_menu"
         android:icon="@drawable/ic_logout"

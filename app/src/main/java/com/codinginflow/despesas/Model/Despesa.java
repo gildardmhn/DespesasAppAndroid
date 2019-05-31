@@ -9,6 +9,7 @@ public class Despesa {
     private String descricao;
     private String tipo;
     private Double preco;
+    private String uidUsuario;
 
     public Despesa(String titulo, String descricao, String tipo, Double preco) {
         this.titulo = titulo;
@@ -43,5 +44,13 @@ public class Despesa {
 
     public Double getPreco() {
         return preco;
+    }
+
+    public String getUidUsuario() {
+        return uidUsuario;
+    }
+
+    public void setUidUsuario(String uidUsuario) {
+        this.uidUsuario = uidUsuario;
     }
 }
