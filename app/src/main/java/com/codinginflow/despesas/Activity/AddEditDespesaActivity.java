@@ -1,16 +1,33 @@
 package com.codinginflow.despesas.Activity;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 
+import android.Manifest;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.codinginflow.despesas.R;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class AddEditDespesaActivity extends AppCompatActivity {
@@ -26,6 +43,10 @@ public class AddEditDespesaActivity extends AppCompatActivity {
     private EditText editTextTipo;
     private EditText editTextPreco;
 
+    private Button buttonAnexo;
+    private ImageView imageAnexo;
+    private String pathToFile;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,11 +57,24 @@ public class AddEditDespesaActivity extends AppCompatActivity {
         editTextTipo = findViewById(R.id.edit_text_tipo);
         editTextPreco = findViewById(R.id.edit_text_preco);
 
+        buttonAnexo = findViewById(R.id.btn_anexo);
+
+        if (Build.VERSION.SDK_INT >= 23) {
+            requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
+        }
+
+        buttonAnexo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                diparePictureAction();
+            }
+        });
+
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
 
         Intent intent = getIntent();
 
-        if(intent.hasExtra(EXTRA_HASH)){
+        if (intent.hasExtra(EXTRA_HASH)) {
             setTitle("Editar Despesa");
             editTextTitulo.setText(intent.getStringExtra(EXTRA_TITULO));
             editTextDescricao.setText(intent.getStringExtra(EXTRA_DESCRICAO));
@@ -51,15 +85,54 @@ public class AddEditDespesaActivity extends AppCompatActivity {
         }
 
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == 1) {
+                Bitmap bitmap = BitmapFactory.decodeFile(pathToFile);
+                imageAnexo.setImageBitmap(bitmap);
+            }
+        }
+    }
+
+    private void diparePictureAction() {
+        Intent takePic = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePic.resolveActivity(getPackageManager()) != null) {
+            File photoFile = null;
+            photoFile = createPhotoFile();
+
+            if (photoFile != null) {
+                pathToFile = photoFile.getAbsolutePath();
+                Uri photoUri = FileProvider.getUriForFile(AddEditDespesaActivity.this, "com.codinginflow.despesas.fileprovider", photoFile);
+                takePic.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+                startActivityForResult(takePic, 1);
+            }
+        }
+    }
+
+    private File createPhotoFile() {
+        String name = new SimpleDateFormat("ddMMyyyy").format(new Date());
+        File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        File image = null;
+        try {
+            image = File.createTempFile(name, ".jpg", storageDir);
+        } catch (IOException e) {
+            System.out.println("Deu ruim ao salvar imagem...");
+        }
+        return image;
+    }
+
     private void delteDespesa() {
         Intent intent = getIntent();
-        if(intent.hasExtra(EXTRA_HASH)){
+        if (intent.hasExtra(EXTRA_HASH)) {
             String hash = intent.getStringExtra(EXTRA_HASH);
             Intent deleteHash = new Intent();
             deleteHash.putExtra(EXTRA_HASH, hash);
             setResult(RESULT_OK, deleteHash);
             finish();
-        }else {
+        } else {
             Toast.makeText(this, "Não pode remover uma despesa inexistante", Toast.LENGTH_SHORT).show();
         }
     }
@@ -68,7 +141,7 @@ public class AddEditDespesaActivity extends AppCompatActivity {
         String titulo = editTextTitulo.getText().toString();
         String descricao = editTextDescricao.getText().toString();
         String tipo = editTextTipo.getText().toString();
-        Double preco = Double.parseDouble(editTextPreco.getText().toString().replace(',','.'));
+        Double preco = Double.parseDouble(editTextPreco.getText().toString().replace(',', '.'));
 
         if (titulo.trim().isEmpty() || descricao.trim().isEmpty() || tipo.trim().isEmpty() || preco.isNaN()) {
             Toast.makeText(this, "Preencha as informações", Toast.LENGTH_SHORT).show();
@@ -82,7 +155,7 @@ public class AddEditDespesaActivity extends AppCompatActivity {
         data.putExtra(EXTRA_PRECO, preco);
 
         String hash = getIntent().getStringExtra(EXTRA_HASH);
-        if(hash != null){
+        if (hash != null) {
             data.putExtra(EXTRA_HASH, hash);
         }
 
