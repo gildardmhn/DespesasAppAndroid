@@ -31,6 +31,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -154,7 +155,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void eventoDatabase() {
-        databaseReference.child("Despesa").addValueEventListener(new ValueEventListener() {
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        Query query = databaseReference.child("Despesa").orderByChild("uidUsuario").equalTo(uid);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 despesaList.clear();
