@@ -209,9 +209,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             despesa.setHash(hash);
             databaseReference.child("Despesa").child(despesa.getHash()).setValue(despesa);
-//            despesaViewModel.insert(despesa);
-
-
+            finish();
+            startActivity(getIntent());
             Toast.makeText(this, "Despesa salva com sucesso", Toast.LENGTH_SHORT).show();
 
         } else if (requestCode == EDIT_DESPESA_REQUEST && resultCode == RESULT_OK) {
@@ -236,11 +235,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                     despesa.setHash(hash);
                     databaseReference.child("Despesa").child(despesa.getHash()).setValue(despesa);
+                    finish();
+                    startActivity(getIntent());
                     Toast.makeText(this, "Despesa atualizada", Toast.LENGTH_SHORT).show();
                 } else {
                     Despesa despesa = new Despesa();
                     despesa.setHash(hash);
                     databaseReference.child("Despesa").child(despesa.getHash()).removeValue();
+                    finish();
+                    startActivity(getIntent());
+                    Toast.makeText(this, "Despesa removida", Toast.LENGTH_SHORT).show();
                 }
 
             }

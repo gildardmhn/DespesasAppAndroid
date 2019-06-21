@@ -25,6 +25,7 @@ public class AddEditEstabelecimentoActivity extends AppCompatActivity {
     private EditText editTextNome;
     private EditText editTextEndereco;
     private EditText editTextTelefone;
+    private Button buttonVerMapa;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,18 +39,7 @@ public class AddEditEstabelecimentoActivity extends AppCompatActivity {
 
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
 
-        Intent intent = getIntent();
-
-        if(intent.hasExtra(EXTRA_HASH_EST)){
-            setTitle("Editar Estabelecimento");
-            editTextNome.setText(intent.getStringExtra(EXTRA_NOME));
-            editTextEndereco.setText(intent.getStringExtra(EXTRA_ENDERECO));
-            editTextTelefone.setText(intent.getStringExtra(EXTRA_TELEFONE));
-        } else {
-            setTitle("Cadastrar Estabelecimento");
-        }
-
-        Button buttonVerMapa = findViewById(R.id.ver_mapa);
+        buttonVerMapa = findViewById(R.id.ver_mapa);
         buttonVerMapa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,6 +49,20 @@ public class AddEditEstabelecimentoActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        Intent intent = getIntent();
+
+        if(intent.hasExtra(EXTRA_HASH_EST)){
+            setTitle("Editar Estabelecimento");
+            editTextNome.setText(intent.getStringExtra(EXTRA_NOME));
+            editTextEndereco.setText(intent.getStringExtra(EXTRA_ENDERECO));
+            editTextTelefone.setText(intent.getStringExtra(EXTRA_TELEFONE));
+        } else {
+            setTitle("Cadastrar Estabelecimento");
+            buttonVerMapa.setVisibility(View.GONE);
+        }
+
+
 
 
 

@@ -6,6 +6,7 @@ public class Estabelecimento {
     private String nome;
     private String endereco;
     private String telefone;
+    private String uidUsuario;
 
     public Estabelecimento(String nome, String endereco, String telefone) {
         this.nome = nome;
@@ -34,5 +35,13 @@ public class Estabelecimento {
 
     public String getTelefone() {
         return telefone;
+    }
+
+    public String getUidUsuario() {
+        return uidUsuario;
+    }
+
+    public void setUidUsuario(String uidUsuario) {
+        this.uidUsuario = uidUsuario;
     }
 }
