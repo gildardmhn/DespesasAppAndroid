@@ -15,6 +15,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "976817013432-nvkk55hnu5hb91ek53u9ii8hcia3c8gu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.codinginflow.despesas",
+            "certificate_hash": "ea8f34d769d37c08d9fe1bf934c5173cdd7b5eaa"
+          }
+        },
+        {
+          "client_id": "976817013432-5ie7i8hfqk1pnj9otk4e0r4avf2uj0nk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.codinginflow.despesas",
+            "certificate_hash": "a8f992984ec076430c87a653384faa0ec5fef8b8"
+          }
+        },
+        {
           "client_id": "976817013432-tl33dmr2m1uk5k0bdvik1v15f6j53ecq.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
