@@ -13,34 +13,40 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Título"
-        android:inputType="text"/>
+        android:inputType="text" />
 
     <EditText
         android:id="@+id/edit_text_descricao"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Descrição"
-        android:inputType="textMultiLine"/>
+        android:inputType="textMultiLine" />
 
     <EditText
         android:id="@+id/edit_text_tipo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Tipo"
-        android:inputType="text"/>
+        android:inputType="text" />
 
     <EditText
         android:id="@+id/edit_text_preco"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Preço ex: 85,99"
-        android:inputType="text"/>
-    
+        android:inputType="text" />
+
     <Button
         android:id="@+id/btn_anexo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Capturar foto"/>
+        android:text="Capturar foto" />
+
+    <Button
+        android:id="@+id/btn_upluoad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enviar foto" />
 
     <ImageView
         android:id="@+id/image_anexo"

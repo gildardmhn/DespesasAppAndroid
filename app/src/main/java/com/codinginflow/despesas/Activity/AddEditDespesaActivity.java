@@ -38,12 +38,19 @@ public class AddEditDespesaActivity extends AppCompatActivity {
     public static final String EXTRA_TIPO = "com.codinginflow.despesas.EXTRA_TIPO";
     public static final String EXTRA_PRECO = "com.codinginflow.despesas.EXTRA_PRECO";
 
+
+    private static final int PICK_IMAGE_REQUEST = 234;
+
     private EditText editTextTitulo;
     private EditText editTextDescricao;
     private EditText editTextTipo;
     private EditText editTextPreco;
 
+    // Camera e fb storage
     private Button buttonAnexo;
+    private Button buttonUpluoad;
+    private Uri filePath;
+
     private ImageView imageAnexo;
     private String pathToFile;
 
@@ -52,12 +59,13 @@ public class AddEditDespesaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_despesa);
 
-        editTextTitulo = findViewById(R.id.edit_text_titulo);
-        editTextDescricao = findViewById(R.id.edit_text_descricao);
-        editTextTipo = findViewById(R.id.edit_text_tipo);
-        editTextPreco = findViewById(R.id.edit_text_preco);
+        editTextTitulo = (EditText) findViewById(R.id.edit_text_titulo);
+        editTextDescricao = (EditText) findViewById(R.id.edit_text_descricao);
+        editTextTipo = (EditText) findViewById(R.id.edit_text_tipo);
+        editTextPreco = (EditText) findViewById(R.id.edit_text_preco);
 
-        buttonAnexo = findViewById(R.id.btn_anexo);
+        imageAnexo = (ImageView) findViewById(R.id.image_anexo);
+        buttonAnexo = (Button) findViewById(R.id.btn_anexo);
 
         if (Build.VERSION.SDK_INT >= 23) {
             requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
@@ -95,6 +103,17 @@ public class AddEditDespesaActivity extends AppCompatActivity {
                 imageAnexo.setImageBitmap(bitmap);
             }
         }
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK != null && data.getData() != null) {
+            filePath = data.getData();
+        }
+    }
+
+    private void showFileChooser() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Selecione uma imagem"), PICK_IMAGE_REQUEST);
     }
 
     private void diparePictureAction() {
@@ -113,11 +132,11 @@ public class AddEditDespesaActivity extends AppCompatActivity {
     }
 
     private File createPhotoFile() {
-        String name = new SimpleDateFormat("ddMMyyyy").format(new Date());
+//      String name = new SimpleDateFormat("ddMMyyyy").format(new Date());
         File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
         File image = null;
         try {
-            image = File.createTempFile(name, ".jpg", storageDir);
+            image = File.createTempFile(editTextTitulo.getText().toString().trim(), ".jpg", storageDir);
         } catch (IOException e) {
             System.out.println("Deu ruim ao salvar imagem...");
         }
