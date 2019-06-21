@@ -1,5 +1,6 @@
 package com.codinginflow.despesas.Activity;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
@@ -23,6 +24,11 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.codinginflow.despesas.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.io.IOException;
@@ -49,7 +55,9 @@ public class AddEditDespesaActivity extends AppCompatActivity {
     // Camera e fb storage
     private Button buttonAnexo;
     private Button buttonUpluoad;
+
     private Uri filePath;
+    private StorageReference storageReference;
 
     private ImageView imageAnexo;
     private String pathToFile;
@@ -58,6 +66,8 @@ public class AddEditDespesaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_despesa);
+
+        storageReference = FirebaseStorage.getInstance().getReference();
 
         editTextTitulo = (EditText) findViewById(R.id.edit_text_titulo);
         editTextDescricao = (EditText) findViewById(R.id.edit_text_descricao);
@@ -82,32 +92,45 @@ public class AddEditDespesaActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
+        File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        String imageName = editTextTitulo.getText().toString().trim() + ".jpg";
         if (intent.hasExtra(EXTRA_HASH)) {
             setTitle("Editar Despesa");
             editTextTitulo.setText(intent.getStringExtra(EXTRA_TITULO));
             editTextDescricao.setText(intent.getStringExtra(EXTRA_DESCRICAO));
             editTextTipo.setText(intent.getStringExtra(EXTRA_TIPO));
             editTextPreco.setText(intent.getStringExtra(EXTRA_PRECO));
+
+            File f = new File(storageDir + imageName);
+            Bitmap bmp = BitmapFactory.decodeFile(f.getAbsolutePath());
+            imageAnexo.setImageBitmap(bmp);
         } else {
             setTitle("Cadastrar Despesa");
         }
 
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            if (requestCode == 1) {
-                Bitmap bitmap = BitmapFactory.decodeFile(pathToFile);
-                imageAnexo.setImageBitmap(bitmap);
-            }
-        }
-
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK != null && data.getData() != null) {
-            filePath = data.getData();
-        }
-    }
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (resultCode == RESULT_OK) {
+//            if (requestCode == 1) {
+//                Bitmap bitmap = BitmapFactory.decodeFile(pathToFile);
+//                imageAnexo.setImageBitmap(bitmap);
+//            }
+//        }
+//
+//        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data.getData() != null) {
+//            filePath = data.getData();
+//            try {
+//                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+//                // Carregar imagem local ou do fb
+//                imageAnexo.setImageBitmap(bitmap);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
 
     private void showFileChooser() {
         Intent intent = new Intent();
@@ -136,7 +159,28 @@ public class AddEditDespesaActivity extends AppCompatActivity {
         File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
         File image = null;
         try {
+
+            String imageName = editTextTitulo.getText().toString().trim();
             image = File.createTempFile(editTextTitulo.getText().toString().trim(), ".jpg", storageDir);
+
+
+            Uri file = Uri.fromFile(new File(storageDir.toURI() + imageName + ".jpg"));
+            StorageReference riversRef = storageReference.child("images/" + imageName + ".jpg");
+
+            riversRef.putFile(file)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            Uri downloadUrl = taskSnapshot.getUploadSessionUri();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            System.out.println("Deu ruim ao salvar imagem...");
+                        }
+                    });
+
         } catch (IOException e) {
             System.out.println("Deu ruim ao salvar imagem...");
         }
