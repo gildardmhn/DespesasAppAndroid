@@ -87,7 +87,6 @@ public class AddUsuarioActivity extends AppCompatActivity {
     }
 
     private void criarUsuario(String email, String senha) {
-        alert(senha);
         auth.createUserWithEmailAndPassword(email, senha).addOnCompleteListener(AddUsuarioActivity.this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
