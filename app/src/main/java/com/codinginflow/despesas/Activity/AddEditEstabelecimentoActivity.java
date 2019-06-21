@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -18,6 +20,7 @@ public class AddEditEstabelecimentoActivity extends AppCompatActivity {
     public static final String EXTRA_NOME = "com.codinginflow.despesas.EXTRA_NOME";
     public static final String EXTRA_ENDERECO = "com.codinginflow.despesas.EXTRA_ENDERECO";
     public static final String EXTRA_TELEFONE = "com.codinginflow.despesas.EXTRA_TELEFONE";
+    public static final int OPEN_MAP = 1;
 
     private EditText editTextNome;
     private EditText editTextEndereco;
@@ -32,6 +35,7 @@ public class AddEditEstabelecimentoActivity extends AppCompatActivity {
         editTextEndereco = findViewById(R.id.edit_text_est_endereco);
         editTextTelefone = findViewById(R.id.edit_text_est_telefone);
 
+
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
 
         Intent intent = getIntent();
@@ -44,6 +48,17 @@ public class AddEditEstabelecimentoActivity extends AppCompatActivity {
         } else {
             setTitle("Cadastrar Estabelecimento");
         }
+
+        Button buttonVerMapa = findViewById(R.id.ver_mapa);
+        buttonVerMapa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AddEditEstabelecimentoActivity.this, MapsActivity.class);
+                String endereco = editTextEndereco.getText().toString();
+                intent.putExtra(MapsActivity.EXTRA_MAPA_ENDERECO, endereco);
+                startActivity(intent);
+            }
+        });
 
 
 
